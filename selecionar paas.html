@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        textarea{
+            width: 100%;
+            height: 200px;
+        }
+        ul{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <textarea name="" id=""></textarea>
+    <button>procesar</button>
+    <div>
+        <h2>lista <strong id="npalabra"></strong></h2>
+        <ul id="paas"></ul>
+
+    </div>
+
+
+    <script>
+        const textarea = document.querySelector('textarea');
+        const btn = document.querySelector('button');
+        const paas = document.getElementById('paas');
+        const npalabra = document.getElementById('npalabra');
+        var n = 0;
+        btn.addEventListener('click',()=>{
+
+            const text = textarea.value;
+            // expresion regula para quielar los caracteres especiales y mantener las letras incluyendo la ñ, é, á, í, ó, ú
+            const regex = /[^\w\s/\é\á\í\ó\ú\ü\ö]/g;
+            const cleanedLine = text.replace(regex, '');
+            const lines = cleanedLine.split(' ');
+            const lowercaseLines = lines.map(line => line.toLowerCase());
+            
+            unique(lowercaseLines).forEach(line => {
+                n++;
+                npalabra.textContent = n;
+                const li = document.createElement('li');
+                li.textContent = line;
+                paas.appendChild(li);
+            });
+            
+        });
+
+        // funcion para convertin un array en un set
+        function unique(arr) {
+            return Array.from(new Set(arr));
+        }
+
+
+        
+        
+    </script>
+</body>
+</html>

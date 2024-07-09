@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>creador de listas</title>
+    <style>
+        #creardor{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #itemlista{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .item{
+            display: flex;
+            justify-content: space-around;
+        }
+        .listas{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="creardor">
+        <h1>creador de listas</h1>
+        <input type="text" id="input">
+        <button id="btn">agregar</button>
+        <div id="itemlista">
+            <h2>item</h2>
+            <input type="text" id="inputitem">
+            <input type="text" id="inputitem2">
+            <button id="btnitem">agregar</button>
+        </div>
+    </div>
+    <div>
+        <h2>lista activa</h2>
+        <ul id="listaitem"></ul>
+    </div>
+    <div class="listas">
+        <h1>listas</h1>
+        <ul id="lista">
+            <li>lista 1</li>
+            <li>lista 2</li>
+            <li>lista 3</li>
+        </ul>
+    </div>    
+
+    <button onclick="cargarItems()">cargarItems</button>
+    <script >
+        const input = document.getElementById('input');
+        const btn = document.getElementById('btn');
+        const lista = document.getElementById('lista');
+        const itemlista = document.getElementById('itemlista');
+        const inputitem = document.getElementById('inputitem');
+        const inputitem2 = document.getElementById('inputitem2');
+        const btnitem = document.getElementById('btnitem');
+        
+
+        btn.addEventListener('click',()=>{
+            const texto = input.value;
+            const li = document.createElement('li');
+            li.textContent = texto;
+            lista.appendChild(li);
+            input.value = '';
+
+        });
+        btnitem.addEventListener('click', () => {
+            const itemTexto = inputitem.value;
+            const itemValor = inputitem2.value;
+            const item = { texto: itemTexto, valor: itemValor };
+            if (!localStorage.getItem('items')) {
+                localStorage.setItem('items', JSON.stringify({ texto: [], valor: [] }));
+            }
+            const items = JSON.parse(localStorage.getItem('items')) || [];
+            if (items.texto.includes(itemTexto)) {
+                inputitem.value = '';
+                inputitem2.value = '';
+                return;
+            }
+            items.texto.push(itemTexto);
+            items.valor.push(itemValor);
+            localStorage.setItem('items', JSON.stringify(items));
+            inputitem.value = '';
+            inputitem2.value = '';
+            cargarItems();
+            // activar el input para agregar items
+            document.getElementById('inputitem').focus();
+            
+        });
+        
+       // recupero los elemenos del local storage y los muestro en el dom 
+        function cargarItems() {
+            const items = JSON.parse(localStorage.getItem('items')) || { texto: [], valor: [] };
+            listaitem.innerHTML = '';
+            for (let i = 0; i < items.texto.length; i++) {
+                const li = document.createElement('li');
+                li.classList.add('item');
+                li.innerHTML = "<div><strong>" + items.texto[i]+"</strong> <spam> - </spam> </spam>"+items.valor[i]+"</spam>"+ " - "+"<button onclick="+"borrar()"+">dlt</button></div>";
+                
+                listaitem.appendChild(li);
+            }
+        }
+        // captune el elemento padre del onjeto lececionado y lo elimina del dom
+        function borrar(){
+            const item = event.target.parentElement;
+            var elementopborar= item.firstChild.innerHTML;
+            borraoelemento(elementopborar);
+            item.remove();
+        }
+
+        // borra el elemento selecionado del local storage
+        function borraoelemento(elemento){
+            const items = JSON.parse(localStorage.getItem('items')) || { texto: [], valor: [] };
+            const index = items.texto.indexOf(elemento);
+            items.texto.splice(index, 1);
+            items.valor.splice(index, 1);
+            localStorage.setItem('items', JSON.stringify(items));
+        }
+
+
+        // cargarItems();
+        window.onload = cargarItems;
+    </script>
+
+</body>
+</html>
