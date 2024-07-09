@@ -150,12 +150,20 @@
 
     <button type="button" onclick="asignarpalabra()" class="btn">Generar Palabra</button>
     <button type="button" onclick="mostrarConjugaciones()" class="btn">Mostrar Conjugaciones</button>
+    <div id="leerauto">
+        <h2>leer automaticamente</h2>
+        <button type="button" onclick="velocidad +500" class="btn">leer</button>
+        <button type="button" onclick="autolectura()" class="btn" id="autolectura">leer</button>
+        <button type="button" onclick="velocidad -500" class="btn">leer</button>
+        
+    </div>
+    
     <div id="lista" onclick="mostrartabla()">
         <h2>lista</h2>
     </div>
     
     <script>
-        
+        var velocidad = 1000;
         var lmaterno= [];
         var lobjetivo= [];
         
@@ -265,17 +273,45 @@
             leer(selectedWord, "de");
         });
 
+        
+
+        var autolectur = false
+        function autolectura() {
+            autolectur = !autolectur
+        }    
+
+
         function leer(params, idioma) {
+            autolectura()
             var speechUtterance = new SpeechSynthesisUtterance(params);
             speechUtterance.rate = 1;
             speechUtterance.lang = idioma;
             //speechUtterance.voice = speechSynthesis.getVoices()[1];
             speechSynthesis.speak(speechUtterance);// configuero loa parametos de velocidad
-                        
+            // captura el eveto utterance.end y llama a la funcion asignarpalabra
+            if (autolectur) {
+                speechUtterance.addEventListener("end", function() {
+                    asignarpalabra()
+
+                })
+        
+                document.getElementById("autolectura").innerHTML = "Autolectura: ON"
+                
+            } else {
+                document.getElementById("autolectura").innerHTML = "Autolectura: OFF"
+            }
+        
+            
         } 
+
+        
 
        
 
+        
+        
+        
+        
         //funcion para auto click en las palabras alemanas 
         function autoClick() {
             var palabrasAleman = document.querySelectorAll("#palabraaleman div");
