@@ -1,0 +1,17 @@
+    <script>
+        // Get the element where you want to store the encoded string
+        var element = document.getElementById('encodedString');
+
+        // Define the original string with special characters
+        var originalString = 'Hello <world> & "everyone"';
+
+        // Encode the special characters
+        var encodedString = element.innerHTML = originalString
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+
+        // Display the encoded string
+        console.log(encodedString);
+    </script>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 90vh;
+        }
+        footer{
+            display: flex;
+            width: 100%;
+            background: yellowgreen;
+            justify-content: space-around;
+        }
+        div{
+            /*display: ;*/
+            margin: auto;
+            width: 90%;
+            justify-content: space-around;
+        }
+        div div{
+            padding: 20px;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            border: 1px solid black;
+        }
+        button {
+            flex: 1 1 auto;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border: #173819 solid 3px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="p1"></div>
+        <div id="p2"></div>
+    </div>
+    <footer>
+        <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
+        <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
+        <button id="leer" onclick="leerTexto()">Leer</button>
+    </footer>
+    <script>
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+
+        const palabras = ["tiene una duración", "menos común", "Tal como", "sitio de construcción", "para eso", "repetir", "inconcluso", "primero", "especificación", "estado natal", "logrado", "reunió", "enseñando", "supervisor", "regularmente", "tarde", "para mañana", "Por ejemplo", "particularmente", "especial", "disparates", "ganar", "caminata", "actuación", "limpio", "guerra", "corajudo", "caminar", "prematuro", "adecuado", "entre el tiempo", "límites", "abandonar", "en algún otro lugar", "mantener", "elegir", "superior", "adivinar", "satisfecho", "Por esta razón", "inútil", "así", "billetera", "abandonado", "finalizar", "se levantó", "demora", "se escapó", "hojas", "enviado", "agregado", "controlar", "competencia", "seguir", "CV", "segundo", "preguntar", "Debido a esto", "suposición", "a propósito", "oración principal", "Por cierto", "divertido", "porque", "mezclado", "agregar", "Déjalo ir", "ciertamente", "cómodo", "añadir", "ahorra", "cercanamente", "cruz", "círculo alrededor", "irse", "Mala suerte", "tarjeta", "lugar", "Idea", "diligente", "además", "educado", "Sala de curso", "allá", "allá", "invitado", "ponerse ", "calma", "horrible", "titulares"];
+        const traduccion = ["dauert", "seltener", "genauso", "baustelle", "dafur", "wiederholen", "ungefert", "zuerst", "an gabe", "heimstat", "erzielt", "getroffen", "untericht", "betreuer", "regelmassig", "verspetum", "ab morgen", "zum beispielt", "besonders", "besondere", "quatsch", "verdinen", "wanderung", "vorstellung", "sauber", "krieg", "mutig", "wandeln", "un fristige", "passendes", "zwischen zeit", "begrents", "kundigen", "woanders", "behalte", "wählen", "überlegen", "raten", "zufrieden", "deshalb", "sinnlos", "soo", "Geldbeutel", "verriessen", "beenden", "aufgestanden", "verschoben", "losgelaufen", "verlässt", "geschickt", "ergänzt", "überprüfen", "wettbewerb", "macht weiter", "Lebenslauf", "zweit", "nachfragen", "deswegen", "vermutung", "absich", "haupsatz", "Übrigens", "komich", "weil", "gemischte", "hinzufugen", "Loslassen", "bestimmt", "bequemen", "ergänzen", "speichert", "eng", "kreuzen", "umkreizen", "weggehen", "Pech", "Kärtchen", "legen", "Ahnung", "fleißig", "dazu", "höflich", "Kursraum", "dort", "dorthin", "eingeladen", "anziehen", "beruhigen", "schlimm", "überschriften"];
+        var visto= [];
+        auto = auto;
+        dual = false;
+
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var intentos = 0;
+        function getPalabra(){
+            var index = getRandomInt(palabras.length);
+            while(visto.includes(index)&& intentos<10){
+                return getPalabra();
+                intentos++;
+                console.log("intenton",intentos);
+                if(intentos==10){
+                    visto = [];
+                    intentos = 0;
+                }
+            }
+            visto.push(index);
+            return index;
+        }
+       
+        
+
+        // formuala para leer el innertext de un elemento que capture el evento en utterance y llame la funcion
+        var manejoDual= false;
+        var idioma = "de";
+        function leerTexto() {
+            var texto = p2.innerText;    
+            var utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = idioma;
+            speechSynthesis.speak(utterance);
+            //idioma = idioma=="es-ES"?"de-DE":"es-ES";
+            //texto= texto==p1.innerText?p2.innerText:p1.innerText;
+            //if (speechSynthesis.speaking) {
+            //    console.log("Leyendo el texto");
+            //}
+            if(auto){
+                //setTimeout(() => {
+                //    leerTexto();
+                //}, 1000);
+                utterance.onend = function() {  
+                    
+                    //if(texto == p2.innerText){
+                        
+                        mostrarPalabra();
+                    //}
+                    leerTexto();
+                    
+                    
+                }
+                Leer();
+
+
+            }
+            
+        }
+        function Auto(){
+            document.getElementById("auto").innerText = auto==true?"auto:off":"auto: on";
+            
+            if(auto){
+                document.getElementById("auto").style.backgroundColor = "red";
+            }else{
+                document.getElementById("auto").style.backgroundColor = "green";
+            }
+
+            auto= auto==false?true:false
+        }        
+        function Dual(){
+            document.getElementById("dual").innerText = dual==true?"de":"es-de";
+            
+            if(dual){
+                document.getElementById("dual").style.backgroundColor = "red";  
+            }else{
+                document.getElementById("dual").style.backgroundColor = "green";
+            }
+
+            dual= dual==false?true:false
+        }
+        function Leer(){
+            
+            if(document.getElementById("leer").innerText == "Leer"){
+                document.getElementById("leer").innerHTML = "activo";
+                document.getElementById("leer").onclick = "Leer()";
+                  
+            }else{
+                document.getElementById("leer").onclick = "leerTexto()";
+                document.getElementById("leer").innerHTML = "leer";
+            }
+
+            dual= dual==false?true:false
+        }
+        
+        function mostrarPalabra(){
+            var index = getPalabra();
+            p1.innerText = palabras[index];
+            p2.innerText = traduccion[index];
+        }
+        mostrarPalabra();
+
+        // Call the function when the button is clicked
+        //document.querySelector("button").addEventListener("click", leerTexto);
+    </script>
+</body>
+</html>
