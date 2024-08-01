@@ -60,14 +60,40 @@
     <footer>
         <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
         <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
-        <button id="leer" onclick="leerTexto()">Leer</button>
+        <button id="leer" onclick="Leer()">Leer</button>
+        
     </footer>
+    <hr>
+    <div style="display: flex;margin: 0%;">
+        <button onclick="listaN(0)">lst1</button>
+        <button onclick="listaN(1)">lst2</button>
+        <button onclick="listaN(2)">lst3</button>
+        <button onclick="listaN(3)">lst4</button>
+        <button onclick="listaN(4)">lst5</button>
+        <button onclick="listaN(5)">lst6</button>
+    </div>
     <script>
         var p1 = document.getElementById("p1");
         var p2 = document.getElementById("p2");
 
-        const palabras = ["tiene una duración", "menos común", "Tal como", "sitio de construcción", "para eso", "repetir", "inconcluso", "primero", "especificación", "estado natal", "logrado", "reunió", "enseñando", "supervisor", "regularmente", "tarde", "para mañana", "Por ejemplo", "particularmente", "especial", "disparates", "ganar", "caminata", "actuación", "limpio", "guerra", "corajudo", "caminar", "prematuro", "adecuado", "entre el tiempo", "límites", "abandonar", "en algún otro lugar", "mantener", "elegir", "superior", "adivinar", "satisfecho", "Por esta razón", "inútil", "así", "billetera", "abandonado", "finalizar", "se levantó", "demora", "se escapó", "hojas", "enviado", "agregado", "controlar", "competencia", "seguir", "CV", "segundo", "preguntar", "Debido a esto", "suposición", "a propósito", "oración principal", "Por cierto", "divertido", "porque", "mezclado", "agregar", "Déjalo ir", "ciertamente", "cómodo", "añadir", "ahorra", "cercanamente", "cruz", "círculo alrededor", "irse", "Mala suerte", "tarjeta", "lugar", "Idea", "diligente", "además", "educado", "Sala de curso", "allá", "allá", "invitado", "ponerse ", "calma", "horrible", "titulares"];
-        const traduccion = ["dauert", "seltener", "genauso", "baustelle", "dafur", "wiederholen", "ungefert", "zuerst", "an gabe", "heimstat", "erzielt", "getroffen", "untericht", "betreuer", "regelmassig", "verspetum", "ab morgen", "zum beispielt", "besonders", "besondere", "quatsch", "verdinen", "wanderung", "vorstellung", "sauber", "krieg", "mutig", "wandeln", "un fristige", "passendes", "zwischen zeit", "begrents", "kundigen", "woanders", "behalte", "wählen", "überlegen", "raten", "zufrieden", "deshalb", "sinnlos", "soo", "Geldbeutel", "verriessen", "beenden", "aufgestanden", "verschoben", "losgelaufen", "verlässt", "geschickt", "ergänzt", "überprüfen", "wettbewerb", "macht weiter", "Lebenslauf", "zweit", "nachfragen", "deswegen", "vermutung", "absich", "haupsatz", "Übrigens", "komich", "weil", "gemischte", "hinzufugen", "Loslassen", "bestimmt", "bequemen", "ergänzen", "speichert", "eng", "kreuzen", "umkreizen", "weggehen", "Pech", "Kärtchen", "legen", "Ahnung", "fleißig", "dazu", "höflich", "Kursraum", "dort", "dorthin", "eingeladen", "anziehen", "beruhigen", "schlimm", "überschriften"];
+        //base con todas la palabras en español y aleman
+        const baseesp= ["tiene una duración", "menos común", "Tal como", "sitio de construcción", "para eso", "repetir", "inconcluso", "primero", "especificación", "estado natal", "logrado", "reunió", "enseñando", "supervisor", "regularmente", "tarde", "para mañana", "Por ejemplo", "particularmente", "especial", "disparates", "ganar", "caminata", "actuación", "limpio", "guerra", "corajudo", "caminar", "prematuro", "adecuado", "entre el tiempo", "límites", "abandonar", "en algún otro lugar", "mantener", "elegir", "superior", "adivinar", "satisfecho", "Por esta razón", "inútil", "así", "billetera", "abandonado", "finalizar", "se levantó", "demora", "se escapó", "hojas", "enviado", "agregado", "controlar", "competencia", "seguir", "CV", "segundo", "preguntar", "Debido a esto", "suposición", "a propósito", "oración principal", "Por cierto", "divertido", "porque", "mezclado", "agregar", "Déjalo ir", "ciertamente", "cómodo", "añadir", "ahorra", "cercanamente", "cruz", "círculo alrededor", "irse", "Mala suerte", "tarjeta", "lugar", "Idea", "diligente", "además", "educado", "Sala de curso", "allá", "allá", "invitado", "ponerse ", "calma", "horrible", "titulares", "a tiempo", "llevar consigo", "Ahmet", "decente", "Invitación", "bien", "por último", "Espectáculo", "el aperitivo", "plato principal", "postre", "bostezos", "varias veces", "Introducción", "Arreglar", "secciones", "en el texto", "¿Qué encaja?", "Regular", "dónde", "sin embargo", "divertido", "incluso", "Fuera de la vista, fuera de la mente", "contra"];
+        const basede= ["dauert", "seltener", "genauso", "baustelle", "dafur", "wiederholen", "ungefert", "zuerst", "an gabe", "heimstat", "erzielt", "getroffen", "untericht", "betreuer", "regelmassig", "verspetum", "ab morgen", "zum beispielt", "besonders", "besondere", "quatsch", "verdinen", "wanderung", "vorstellung", "sauber", "krieg", "mutig", "wandeln", "un fristige", "passendes", "zwischen zeit", "begrents", "kundigen", "woanders", "behalte", "wählen", "überlegen", "raten", "zufrieden", "deshalb", "sinnlos", "soo", "Geldbeutel", "verriessen", "beenden", "aufgestanden", "verschoben", "losgelaufen", "verlässt", "geschickt", "ergänzt", "überprüfen", "wettbewerb", "macht weiter", "Lebenslauf", "zweit", "nachfragen", "deswegen", "vermutung", "absich", "haupsatz", "Übrigens", "komich", "weil", "gemischte", "hinzufugen", "Loslassen", "bestimmt", "bequemen", "ergänzen", "speichert", "eng", "kreuzen", "umkreizen", "weggehen", "Pech", "Kärtchen", "legen", "Ahnung", "fleißig", "dazu", "höflich", "Kursraum", "dort", "dorthin", "eingeladen", "anziehen", "beruhigen", "schlimm", "überschriften", "püntklich", "mitbringen", "Ahmet", "ordentliche", "Einladung", "richtigen", "spätestens", "Zeigen", "die Vorspeise", "Haupspeise", "Nachspeise", "Gähnt", "mehrmals", "Einleitung", "Ordnen", "Abschnitten", "im text", "was passt?", "Regeln", "wohin", "jedoch", "lustig", "sogar", "aus den Augen aus dem Sinn", "gegen"];
+        //copia los valores de la base de datos del 1 al 100 usanfo object asing
+
+        var palabras=[...baseesp.slice(0,100)];;
+        var traduccion=[...basede.slice(0,100)];; 
+        
+
+        //divide la base de palabras en listas de 100 palabras para mostrarlas 
+        function listaN(n){
+            var inicio=n*100
+            var fin=inicio+100
+            palabras=[...baseesp.slice(inicio,fin)];
+            traduccion=[...basede.slice(inicio,fin)];
+            mostrarPalabra();
+        }
+        
         var visto= [];
         auto = auto;
         dual = false;
@@ -83,10 +109,11 @@
                 return getPalabra();
                 intentos++;
                 console.log("intenton",intentos);
-                if(intentos==10){
+                
+            }
+            if(visto.length == palabras.length -3){
                     visto = [];
-                    intentos = 0;
-                }
+                    
             }
             visto.push(index);
             return index;
@@ -98,30 +125,42 @@
         var manejoDual= false;
         var idioma = "de";
         function leerTexto() {
-            var texto = p2.innerText;    
+            var texto;    
+            idioma = "de";
+            texto= p2.innerText; 
+            if(dual){
+                if(manejoDual){
+                    idioma = "es";
+                    texto= p1.innerText; 
+                    manejoDual = false;
+                }else{
+                    idioma ="de";
+                    texto= p2.innerText; 
+                    manejoDual = true;
+                }
+            }
+            
             var utterance = new SpeechSynthesisUtterance(texto);
             utterance.lang = idioma;
             speechSynthesis.speak(utterance);
+            
+            
             //idioma = idioma=="es-ES"?"de-DE":"es-ES";
             //texto= texto==p1.innerText?p2.innerText:p1.innerText;
             //if (speechSynthesis.speaking) {
             //    console.log("Leyendo el texto");
             //}
             if(auto){
-                //setTimeout(() => {
-                //    leerTexto();
-                //}, 1000);
-                utterance.onend = function() {  
-                    
-                    //if(texto == p2.innerText){
+                utterance.onend = function() {     
+                    setTimeout(() => {    
+                        if(idioma=="de"){
+                            mostrarPalabra();    
+                        }
+                        leerTexto();
                         
-                        mostrarPalabra();
-                    //}
-                    leerTexto();
-                    
-                    
+                    }, 500);
                 }
-                Leer();
+                
 
 
             }
@@ -151,16 +190,18 @@
         }
         function Leer(){
             
+            if(document.getElementById("leer").innerText == "activo"){
+                location.reload()
+                
+            }
             if(document.getElementById("leer").innerText == "Leer"){
                 document.getElementById("leer").innerHTML = "activo";
                 document.getElementById("leer").onclick = "Leer()";
+                leerTexto()
                   
-            }else{
-                document.getElementById("leer").onclick = "leerTexto()";
-                document.getElementById("leer").innerHTML = "leer";
             }
 
-            dual= dual==false?true:false
+
         }
         
         function mostrarPalabra(){
