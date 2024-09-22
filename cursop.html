@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        *{
+            transition: background 0.2s;
+        }
         body{
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            height: 90vh;
+            height: 97vh;
+            padding-bottom: 0%;
+            margin-bottom: 0%;
         }
         footer{
             display: flex;
@@ -23,7 +28,16 @@
             width: 90%;
             justify-content: space-around;
         }
-        div div{
+
+        #palabrasbuscar{
+            padding: 2px;
+            width: 50%;
+            font-size: 2.5em;
+            
+            
+            
+        }
+        #repetir div, #opciones div {
             padding: 20px;
             width: 50%;
             height: 50%;
@@ -53,7 +67,16 @@
     </style>
 </head>
 <body>
-    <div>
+    <div id="selec" style="border:black 1px dashed;">
+        <div id="palabrasbuscar"> palabra aqui</div>
+        <div id="opciones">
+            <div id="op1">op1</div>
+            <div id="op2">op2</div>
+            <div id="op3">op3</div>
+            <div id="op4">op4</div>
+        </div>
+    </div>
+    <div id="repetir" style="display: none;">
         <div id="p1"></div>
         <div id="p2"></div>
     </div>
@@ -64,7 +87,7 @@
         
     </footer>
     <hr>
-    <div style="display: flex;margin: 0%;">
+    <div style="display: flex;margin: 0%; padding-bottom: 0%;">
         <button onclick="listaN(0)">leccion1</button>
         <button onclick="listaN(1)">lst2</button>
         <button onclick="listaN(2)">lst3</button>
@@ -78,7 +101,7 @@
 
         //base con todas la palabras en español y aleman
         const baseesp= ["la lengua nativa", "particularmente", "volver", "regresar", "la capital", "la lluvia", "la clase", "el momento", "la lección", "la escuela vocacional", "el jefe", "total", "por la noche", "agrio", "de nuevo", "la corazonada", "necesariamente", "ganar", "feliz", "la frontera", "la vida", "corajudo", "temeroso", "pesimista", "optimista", "el mundo", "penetrar", "el medio", "el país extranjero", "empaquetar", "el empleador", "decir", "suceder", "el pueblo", "conseguir", "alquilar", "llegar a saber", "el estudio", "en el camino", "experiencia", "inteligente", "embarazada", "bastante", "la patria", "simpático", "irse", "el éxito", "prohibir", "vender", "la historia", "extrañar", "perder", "extrañar", "finalizar", "mover", "el certificado", "la competencia", "el interno", "diligente", "el equipo", "el testimonio", "incluido", "lleno", "el futuro", "el barco", "la experiencia", "seguro", "inútil", "crear", "el significado", "la pasantía"];
-        const basede= ["die Muttersprache", "besonders", "zurückgehen", "zurückkommen", "die Hauptstadt", "der Regen", "die Klasse", "der Moment", "der Unterricht", "die Berufsschule", "der Chef", "total", "nachts", "sauer", "wieder", "die Ahnung", "inbedingt", "verdienen", "glücklich", "die Grenze", "das Leben", "mutig", "ängstlich", "pessimistich", "optimistisch", "die Welt", "dringen", "die Mitte", "das Ausland", "einpacken", "der Arbeitgeber", "erzählen", "passieren", "das Dorf", "kriegen", "mieten", "kennenlernen", "Das Studium", "unterwegs", "erleben", "intelligent", "schwanger", "ziemlich", "die Heimat", "sympatisch", "weggehen", "der Erfolg", "verbieten", "verkaufen", "die Geschichte", "verpassen", "verlieren", "vermissen", "beenden", "verschieben", "die Urkunde", "der Wettbewerb", "der Praktikant", "fleißig", "das Team", "das Zeugnis", "dabei", "voll", "die Zukunft", "das Schiff", "die Erfahrung", "sicher", "sinnlos", "schaffen", "der Sinn", "das Praktikum"];
+        const basede= ["die Muttersprache", "besonders", "zurückgehen", "zurückkommen", "die Hauptstadt", "der Regen", "die Klasse", "der Moment", "der Unterricht", "die Berufsschule", "der Chef", "total", "nachts", "sauer", "wieder", "die Ahnung", "unbedingt", "verdienen", "glücklich", "die Grenze", "das Leben", "mutig", "ängstlich", "pessimistich", "optimistisch", "die Welt", "dringen", "die Mitte", "das Ausland", "einpacken", "der Arbeitgeber", "erzählen", "passieren", "das Dorf", "kriegen", "mieten", "kennenlernen", "Das Studium", "unterwegs", "erleben", "intelligent", "schwanger", "ziemlich", "die Heimat", "sympatisch", "weggehen", "der Erfolg", "verbieten", "verkaufen", "die Geschichte", "verpassen", "verlieren", "vermissen", "beenden", "verschieben", "die Urkunde", "der Wettbewerb", "der Praktikant", "fleißig", "das Team", "das Zeugnis", "dabei", "voll", "die Zukunft", "das Schiff", "die Erfahrung", "sicher", "sinnlos", "schaffen", "der Sinn", "das Praktikum"];
         //copia los valores de la base de datos del 1 al 100 usanfo object asing
 
         var palabras=[...baseesp.slice(0,100)];;
@@ -124,7 +147,7 @@
         // formuala para leer el innertext de un elemento que capture el evento en utterance y llame la funcion
         var manejoDual= false;
         var idioma = "de";
-        function leerTexto() {
+        function leerTexto(texto= p2.innerText) {
             var texto;    
             idioma = "de";
             texto= p2.innerText; 
@@ -213,6 +236,66 @@
 
         // Call the function when the button is clicked
         //document.querySelector("button").addEventListener("click", leerTexto);
+        
+        
+        /*
+        
+        
+        */
+        var verificar;
+        var op1= document.getElementById("op1")
+        var op2= document.getElementById("op2")
+        var op3= document.getElementById("op3")
+        var op4= document.getElementById("op4")
+        
+        function juegoselecion(){
+            let palabraparabuscar= getPalabra()
+            document.getElementById("palabrasbuscar").innerHTML = palabras[palabraparabuscar]
+            
+            op1.innerHTML= traduccion[getPalabra()];
+            op2.innerHTML=traduccion[getPalabra()];
+            op3.innerHTML=traduccion[getPalabra()];
+            op4.innerHTML=traduccion[getPalabra()];
+            let confirmacion= [op1,op2,op3,op4];
+            confirmacion[Math.floor(Math.random()*3)].innerHTML= traduccion[palabraparabuscar]   
+
+        }
+
+        function leerselec(texto) {
+            var utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = idioma;
+                speechSynthesis.speak(utterance);
+                
+        }
+        document.getElementById("opciones").addEventListener("click",(e)=>{
+            let evento= e.target.id
+            //console.log(traduccion.indexOf(e.target.innerText))
+            if(traduccion.indexOf(e.target.innerText)== palabras.indexOf(document.getElementById("palabrasbuscar").innerText) ){
+                leerselec(e.target.innerText)
+                document.getElementById("opciones").style.background="green"
+                setTimeout(() => {
+                    document.getElementById("opciones").style.background=""
+                    
+                }, 400);
+                juegoselecion();
+
+            }else{
+                leerselec(traduccion[palabras.indexOf(document.getElementById("palabrasbuscar").innerText)])
+                document.getElementById("opciones").style.background="red"
+                setTimeout(() => {
+                    document.getElementById("opciones").style.background=""
+                    
+                }, 400);
+
+                juegoselecion();
+            }
+            
+
+        })
+        
+        juegoselecion()
+
+
     </script>
 </body>
 </html>
