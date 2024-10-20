@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch in 30 Tagen
+    </title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 90vh;
+        }
+        footer{
+            display: flex;
+            width: 100%;
+            background: yellowgreen;
+            justify-content: space-around;
+        }
+        div{
+            /*display: ;*/
+            margin: auto;
+            width: 90%;
+            justify-content: space-around;
+        }
+        div div{
+            padding: 20px;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            border: 1px solid black;
+        }
+        button {
+            flex: 1 1 auto;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border: #173819 solid 3px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="p1"></div>
+        <div id="p2"></div>
+    </div>
+    <footer>
+        <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
+        <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
+        <button id="leer" onclick="Leer()">Leer</button>
+        
+    </footer>
+    <hr>
+    <div style="display: flex;margin: 0%;">
+        <button onclick="listaN(0)">lst1</button>
+        <button onclick="listaN(1)">lst2</button>
+        <button onclick="listaN(2)">lst3</button>
+        <button onclick="listaN(3)">lst4</button>
+        <button onclick="listaN(4)">lst5</button>
+        <button onclick="listaN(5)">lst6</button>
+    </div>
+    <script>
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+
+        //base con todas la palabras en español y aleman
+        const baseesp= ["viejo", "Adiós", "por favor", "Gracias", "curso de alemán", "Alemania", "diálogo", "Estados Unidos", "gratis", "Sentido", "bienvenido", "Soy", "mi nombre es", "vengo de", "Año", "continente", "país", "lección", "aprendiz", "Lugar", "decir", "Hora", "Nombre de pila", "continuar", "trabajar", "comenzar", "Hasta luego", "compañía", "¿Puedo presentarlo?", "genial", "puede", "Disculpe", "disculpar", "completo", "empresa, empresas", "ir", "cerca", "trabajo", "venir de", "largo, largo", "refrescar", "Construcción de máquinas", "Mes", "Pasantía", "conocernos", "encontrarse", "estudiar", "excelente", "la lección", "divertirse", "¿Qué?", "¿Cómo?", "¿Cómo estás?", "¿dónde?", "Semana", "¿De donde?", "residir", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "ambos", "Profesión", "¿Cuál es tu profesión?", "primero", "Familia", "preguntas", "feliz", "joven", "Kindergarten", "pequeño", "más", "Vecinos", "ya no", "¿Estás listo?", "hablar", "dulce", "casado", "Relacionado", "en realidad", "Tiempo", "similar", "proyector", "esto, esto, esto", "allá", "real", "algo completamente diferente", "película", "Pez", "Jardín", "juntos", "casa, casas", "trasero", "buscar", "poder", "lento", "computadora portátil", "posible", "debe", "buscar", "a menudo", "suceder", "plan", "presentación", "estoy planeando mi viaje", "había planeado mi viaje", "restaurante", "muchísimo", "muy", "pararse", "Verdadero", "entender", "repetir", "Ánimo", "Estoy de acuerdo con usted", "conocimiento", "raíz", "Palabra", "mirar", "miras de nuevo", "recibir", "convertirse", "rápido", "sustituto", "necesidad", "Lista de compras", "dio", "Dinero", "Verduras", "con alegría", "ciertamente", "Me gustaría", "comprar", "costo", "Comestibles", "mercado, mercados", "Fruta", "Precio", "por", "oferta especial", "Embalaje", "esperar", "Cambiar", "cuánto", "kilo", "gramos", "litro", "la lata", "Botella", "Cartulina", "el paquete", "Pedazo", "la bolsa", "¿Algo más?", "pero con mucho gusto.", "¿Algo más?", "pero con mucha alegría.", "¡Ah, ya!", "la crema", "Adiós", "EE.UU", "sentido", "Soy", "aprendiz", "Ubicación", "Buscar", "¿Puedo presentarlo?", "brillante", "perdón", "completo", "empresa, empresa", "vecindad", "Trabajar", "largo, largo", "refrescar", "Ingeniería Mecánica", "Conócenos", "encontrarse", "estudiar", "excelente", "la lección", "disfrutar", "¿El?", "¿Como?", "¿Cómo estás?", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "¿Cuál es tu trabajo?", "Primero", "pocos", "más", "¿Estás listo?", "Relacionado", "De hecho", "proyector", "real", "juntos", "trasero", "estoy planeando mi viaje", "había planeado mi viaje", "mucho", "detener", "VERDADERO", "Dirigir", "Estoy de acuerdo con usted", "ver", "miras de nuevo", "recibir", "Sustituto", "dio", "con alegría", "seguramente", "de", "Cambiar", "el paquete", "la bolsa", "¡Ah, ahora!"];
+        const basede= ["alt", "Auf Wiedersehen", "bitte", "danke", "Deutschkurs", "Deutschland", "Dialog", "die USA", "frei", "Herzlich", "willkommen", "ich bin", "ich heiße", "ich komme aus", "Jahr", "Kontinent", "Land", "Lektion", "Lerner", "Platz", "sagen", "Stunde", "Vorname", "weitermachen", "arbeiten", "beginnen", "Bis später", "Firma", "darf ich ihn vortellen?", "das ist toll", "dürfen", "Entschuldigung", "entschuldigen", "fertig", "Firma, Firmen", "gehen", "in der Nähe von", "Job", "kommen aus", "lang, lange", "laben", "Mashinenbau", "Monat", "Praktikum", "sich kennen", "sich treffen", "studieren", "toll", "das Unterricht", "viel spaß", "was?", "wie?", "wie gehts?", "wo?", "Woche", "woher?", "wohnen", "Wohnung", "ich bin hier seit einer Woche", "ich bin hier seit neun Monaten", "beide", "Beruf", "was machst du beruflich?", "erst", "Familie", "fragen", "glücklich", "jung", "Kindergarten", "klein", "mehr", "Nachbarn", "nicht mehr", "Seid ihr fertig?", "sprechen", "süß", "verheiratet", "Verwandte", "wirklich", "Zeit", "ähnlich", "Beamer", "dieser, diese, dieses", "dort", "echt", "etwas ganz anderes", "Film", "Fisch", "Garten", "gemeinsam", "Haus, Häuser", "hinten", "holen", "konnen", "langsam", "Laptop", "möglich", "müssen", "nachschlagen", "oft", "passieren", "planen", "Präsentation", "ich plane meine Fahre", "ich hatte meine Fahre geplant", "Restaurant", "sehr viel", "sehr", "stehen", "Stimmt", "verstehen", "wiederholen", "Stimmung", "ich stimme dich", "wissen", "Wurzel", "Wort", "nachschauen", "du schaust noch eimal nach", "bekommen", "werden", "schnell", "ersetzen", "brauchen", "Einkaufsliste", "gaben", "Geld", "Gemüse", "gern", "gewiss", "ich möchte", "kaufen", "kosten", "Lebensmittel", "Markt, Märkte", "Obst", "Preis", "pro", "Sonderangebot", "Verpackung", "warten", "Wechselgeld", "wie viel", "Kilo", "Gramm", "Liter", "die Dose", "Flasche", "Karton", "die Packung", "Stück", "die Tüte", "Nöch etwas?", "aber gern.", "Irgendetwas anderes?", "aber mit großer Freude.", "Ah, schon!", "die Sahne", "Tschüss", "USA", "Sinn", "Bin", "Lehrling", "Ort", "Unternehmen", "Kann ich es präsentieren?", "brillant", "Verzeihung", "vollständig", "Unternehmen, Unternehmen", "nahe", "Arbeit", "lang, lang", "auffrischen", "Maschinenbau", "Treffen Sie uns", "treffen", "Studie", "exzellent", "die Lektion", "genießen", "Das?", "Als?", "Wie geht es dir?", "Abteilung", "Ich bin seit einer Woche hier", "Ich bin seit neun Monaten hier", "Was ist Ihr Beruf?", "Erste", "wenig", "weiter", "Sind Sie bereit?", "Verwandt", "Tatsächlich", "Projektor", "real", "zusammen", "hinteren", "Ich plane meine Reise", "Ich hatte meine Reise geplant", "viel", "stoppen", "WAHR", "Kopf hoch", "Ich stimme Ihnen zu", "sehen", "Du schaust noch einmal", "erhalten", "Ersatz", "gab", "mit Freude", "sicherlich", "von", "Ändern", "das Paket", "die Tasche", "Oh, jetzt!"];
+        //copia los valores de la base de datos del 1 al 100 usanfo object asing
+
+        var palabras=[...baseesp.slice(0,100)];;
+        var traduccion=[...basede.slice(0,100)];; 
+        
+
+        //divide la base de palabras en listas de 100 palabras para mostrarlas 
+        function listaN(n){
+            var inicio=n*100
+            var fin=inicio+100
+            palabras=[...baseesp.slice(inicio,fin)];
+            traduccion=[...basede.slice(inicio,fin)];
+            mostrarPalabra();
+        }
+        
+        var visto= [];
+        auto = auto;
+        dual = false;
+
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var intentos = 0;
+        function getPalabra(){
+            var index = getRandomInt(palabras.length);
+            while(visto.includes(index)&& intentos<10){
+                return getPalabra();
+                intentos++;
+                console.log("intenton",intentos);
+                
+            }
+            if(visto.length == palabras.length -3){
+                    visto = [];
+                    
+            }
+            visto.push(index);
+            return index;
+        }
+       
+        
+
+        // formuala para leer el innertext de un elemento que capture el evento en utterance y llame la funcion
+        var manejoDual= false;
+        var idioma = "de";
+        function leerTexto() {
+            var texto;    
+            idioma = "de";
+            texto= p2.innerText; 
+            if(dual){
+                if(manejoDual){
+                    idioma = "es";
+                    texto= p1.innerText; 
+                    manejoDual = false;
+                }else{
+                    idioma ="de";
+                    texto= p2.innerText; 
+                    manejoDual = true;
+                }
+            }
+            
+            var utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = idioma;
+            speechSynthesis.speak(utterance);
+            
+            
+            //idioma = idioma=="es-ES"?"de-DE":"es-ES";
+            //texto= texto==p1.innerText?p2.innerText:p1.innerText;
+            //if (speechSynthesis.speaking) {
+            //    console.log("Leyendo el texto");
+            //}
+            if(auto){
+                utterance.onend = function() {     
+                    setTimeout(() => {    
+                        if(idioma=="de"){
+                            mostrarPalabra();    
+                        }
+                        leerTexto();
+                        
+                    }, 500);
+                }
+                
+
+
+            }
+            
+        }
+        function Auto(){
+            document.getElementById("auto").innerText = auto==true?"auto:off":"auto: on";
+            
+            if(auto){
+                document.getElementById("auto").style.backgroundColor = "red";
+            }else{
+                document.getElementById("auto").style.backgroundColor = "green";
+            }
+
+            auto= auto==false?true:false
+        }        
+        function Dual(){
+            document.getElementById("dual").innerText = dual==true?"de":"es-de";
+            
+            if(dual){
+                document.getElementById("dual").style.backgroundColor = "red";  
+            }else{
+                document.getElementById("dual").style.backgroundColor = "green";
+            }
+
+            dual= dual==false?true:false
+        }
+        function Leer(){
+            
+            if(document.getElementById("leer").innerText == "activo"){
+                location.reload()
+                
+            }
+            if(document.getElementById("leer").innerText == "Leer"){
+                document.getElementById("leer").innerHTML = "activo";
+                document.getElementById("leer").onclick = "Leer()";
+                leerTexto()
+                  
+            }
+
+
+        }
+        
+        function mostrarPalabra(){
+            var index = getPalabra();
+            p1.innerText = palabras[index];
+            p2.innerText = traduccion[index];
+        }
+        mostrarPalabra();
+
+        // Call the function when the button is clicked
+        //document.querySelector("button").addEventListener("click", leerTexto);
+    </script>
+</body>
+</html>
