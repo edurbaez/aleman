@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>selecion de palabras    </title>
+    <style>
+        *{
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 30px;
+        }
+        body{
+            width: 80%;
+            background: rgba(29, 28, 28, 0.24);
+        }
+        #palabra, #op2, #op1, #op3, #op4{
+            box-shadow: rgba(255, 0, 0, 0.274) -1px 4px 1px 2px;
+            text-align: center;
+        }
+        #palabra{
+            background: rgba(29, 28, 28, 0.34);
+            font-size: 1.2rem;
+        }
+        header h1{
+            padding: 0;
+        }
+        #tablero{
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    
+    <header style="margin: auto;"><h1>juego de palabras</h1></header>
+    <div id="tablero">
+        <div id="errores">1</div>
+        <div id="aciertos">0</div>
+        <div id="tiempo">3</div>
+    </div>
+    <div id="juego">
+        <div id="palabra"></div>
+        <div id="opciones">
+            <div id="op1"></div>
+            <div id="op2"></div>
+            <div id="op3"></div>
+            <div id="op4"></div>
+        </div>
+    </div>
+
+    <script>
+        //base con todas la palabras en español y aleman
+        const baseesp= ["viejo", "Adiós", "por favor", "Gracias", "curso de alemán", "Alemania", "diálogo", "Estados Unidos", "gratis", "Sentido", "bienvenido", "Soy", "mi nombre es", "vengo de", "Año", "continente", "país", "lección", "aprendiz", "Lugar", "decir", "Hora", "Nombre de pila", "continuar", "trabajar", "comenzar", "Hasta luego", "compañía", "¿Puedo presentarlo?", "genial", "puede", "Disculpe", "disculpar", "completo", "empresa, empresas", "ir", "cerca", "trabajo", "venir de", "largo, largo", "refrescar", "Construcción de máquinas", "Mes", "Pasantía", "conocernos", "encontrarse", "estudiar", "excelente", "la lección", "divertirse", "¿Qué?", "¿Cómo?", "¿Cómo estás?", "¿dónde?", "Semana", "¿De donde?", "residir", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "ambos", "Profesión", "¿Cuál es tu profesión?", "primero", "Familia", "preguntas", "feliz", "joven", "Kindergarten", "pequeño", "más", "Vecinos", "ya no", "¿Estás listo?", "hablar", "dulce", "casado", "Relacionado", "en realidad", "Tiempo", "similar", "proyector", "esto, esto, esto", "allá", "real", "algo completamente diferente", "película", "Pez", "Jardín", "juntos", "casa, casas", "trasero", "buscar", "poder", "lento", "computadora portátil", "posible", "debe", "buscar", "a menudo", "suceder", "plan", "presentación", "estoy planeando mi viaje", "había planeado mi viaje", "restaurante", "muchísimo", "muy", "pararse", "Verdadero", "entender", "repetir", "Ánimo", "Estoy de acuerdo con usted", "conocimiento", "raíz", "Palabra", "mirar", "miras de nuevo", "recibir", "convertirse", "rápido", "sustituto", "necesidad", "Lista de compras", "dio", "Dinero", "Verduras", "con alegría", "ciertamente", "Me gustaría", "comprar", "costo", "Comestibles", "mercado, mercados", "Fruta", "Precio", "por", "oferta especial", "Embalaje", "esperar", "Cambiar", "cuánto", "kilo", "gramos", "litro", "la lata", "Botella", "Cartulina", "el paquete", "Pedazo", "la bolsa", "¿Algo más?", "pero con mucho gusto.", "¿Algo más?", "pero con mucha alegría.", "¡Ah, ya!", "la crema", "Adiós", "EE.UU", "sentido", "Soy", "aprendiz", "Ubicación", "Buscar", "¿Puedo presentarlo?", "brillante", "perdón", "completo", "empresa, empresa", "vecindad", "Trabajar", "largo, largo", "refrescar", "Ingeniería Mecánica", "Conócenos", "encontrarse", "estudiar", "excelente", "la lección", "disfrutar", "¿El?", "¿Como?", "¿Cómo estás?", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "¿Cuál es tu trabajo?", "Primero", "pocos", "más", "¿Estás listo?", "Relacionado", "De hecho", "proyector", "real", "juntos", "trasero", "estoy planeando mi viaje", "había planeado mi viaje", "mucho", "detener", "VERDADERO", "Dirigir", "Estoy de acuerdo con usted", "ver", "miras de nuevo", "recibir", "Sustituto", "dio", "con alegría", "seguramente", "de", "Cambiar", "el paquete", "la bolsa", "¡Ah, ahora!"];
+        const basede= ["alt", "Auf Wiedersehen", "bitte", "danke", "Deutschkurs", "Deutschland", "Dialog", "die USA", "frei", "Herzlich", "willkommen", "ich bin", "ich heiße", "ich komme aus", "Jahr", "Kontinent", "Land", "Lektion", "Lerner", "Platz", "sagen", "Stunde", "Vorname", "weitermachen", "arbeiten", "beginnen", "Bis später", "Firma", "darf ich ihn vortellen?", "das ist toll", "dürfen", "Entschuldigung", "entschuldigen", "fertig", "Firma, Firmen", "gehen", "in der Nähe von", "Job", "kommen aus", "lang, lange", "laben", "Mashinenbau", "Monat", "Praktikum", "sich kennen", "sich treffen", "studieren", "toll", "das Unterricht", "viel spaß", "was?", "wie?", "wie gehts?", "wo?", "Woche", "woher?", "wohnen", "Wohnung", "ich bin hier seit einer Woche", "ich bin hier seit neun Monaten", "beide", "Beruf", "was machst du beruflich?", "erst", "Familie", "fragen", "glücklich", "jung", "Kindergarten", "klein", "mehr", "Nachbarn", "nicht mehr", "Seid ihr fertig?", "sprechen", "süß", "verheiratet", "Verwandte", "wirklich", "Zeit", "ähnlich", "Beamer", "dieser, diese, dieses", "dort", "echt", "etwas ganz anderes", "Film", "Fisch", "Garten", "gemeinsam", "Haus, Häuser", "hinten", "holen", "konnen", "langsam", "Laptop", "möglich", "müssen", "nachschlagen", "oft", "passieren", "planen", "Präsentation", "ich plane meine Fahre", "ich hatte meine Fahre geplant", "Restaurant", "sehr viel", "sehr", "stehen", "Stimmt", "verstehen", "wiederholen", "Stimmung", "ich stimme dich", "wissen", "Wurzel", "Wort", "nachschauen", "du schaust noch eimal nach", "bekommen", "werden", "schnell", "ersetzen", "brauchen", "Einkaufsliste", "gaben", "Geld", "Gemüse", "gern", "gewiss", "ich möchte", "kaufen", "kosten", "Lebensmittel", "Markt, Märkte", "Obst", "Preis", "pro", "Sonderangebot", "Verpackung", "warten", "Wechselgeld", "wie viel", "Kilo", "Gramm", "Liter", "die Dose", "Flasche", "Karton", "die Packung", "Stück", "die Tüte", "Nöch etwas?", "aber gern.", "Irgendetwas anderes?", "aber mit großer Freude.", "Ah, schon!", "die Sahne", "Tschüss", "USA", "Sinn", "Bin", "Lehrling", "Ort", "Unternehmen", "Kann ich es präsentieren?", "brillant", "Verzeihung", "vollständig", "Unternehmen, Unternehmen", "nahe", "Arbeit", "lang, lang", "auffrischen", "Maschinenbau", "Treffen Sie uns", "treffen", "Studie", "exzellent", "die Lektion", "genießen", "Das?", "Als?", "Wie geht es dir?", "Abteilung", "Ich bin seit einer Woche hier", "Ich bin seit neun Monaten hier", "Was ist Ihr Beruf?", "Erste", "wenig", "weiter", "Sind Sie bereit?", "Verwandt", "Tatsächlich", "Projektor", "real", "zusammen", "hinteren", "Ich plane meine Reise", "Ich hatte meine Reise geplant", "viel", "stoppen", "WAHR", "Kopf hoch", "Ich stimme Ihnen zu", "sehen", "Du schaust noch einmal", "erhalten", "Ersatz", "gab", "mit Freude", "sicherlich", "von", "Ändern", "das Paket", "die Tasche", "Oh, jetzt!"];
+
+        var op1
+        ,op2
+        ,op3
+        ,op4
+        var palabraBuscada;
+
+        var posiciones= [op1,op2,op3,op4];
+        var vistos=[]
+        var intentos= 0;
+        //generara el numero aleatoariao de la opciones y la palabra a buscar
+        function generador(){
+            let num =Math.floor(Math.random()*basede.length)   
+            return num
+        }
+
+
+        function opciones(){
+            palabraBuscada= generador()
+            if(vistos.includes(palabraBuscada)){
+                while (vistos.includes(palabraBuscada) || intentos == 15) {
+                    palabraBuscada =Math.floor(Math.random()*basede.length)
+                    intentos++
+                    console.log("numero de intentos: ",intentos)
+                }
+            }
+            intentos=0
+            posiciones[0] = generador()
+            posiciones[1] = generador()
+            posiciones[2] = generador()
+            posiciones[3] = generador()
+            vistos.push(palabraBuscada)
+            posiciones[Math.floor(Math.random()*3)]= palabraBuscada
+
+            document.getElementById("palabra").innerHTML= baseesp[palabraBuscada]            
+            document.getElementById("op1").innerHTML= basede[posiciones[0]]
+            document.getElementById("op2").innerHTML= basede[posiciones[1]]
+            document.getElementById("op3").innerHTML= basede[posiciones[2]]
+            document.getElementById("op4").innerHTML= basede[posiciones[3]]
+            
+        }
+
+        document.getElementById("opciones").addEventListener("click",(e)=>{
+            if(e.target.id== "op1"){
+                if(posiciones[0]== palabraBuscada){
+                    document.getElementById("opciones").style.background="green"
+                    document.getElementById("aciertos").innerHTML= parseInt(document.getElementById("aciertos").innerHTML)+1    
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }else{
+                    document.getElementById("opciones").style.background="red"
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }
+            }
+            if(e.target.id== "op2"){
+                if(posiciones[1]== palabraBuscada){
+                    document.getElementById("opciones").style.background="green"
+                    document.getElementById("aciertos").innerHTML= parseInt(document.getElementById("aciertos").innerHTML)+1    
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }else{
+                    document.getElementById("opciones").style.background="red"
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }
+            }
+            if(e.target.id== "op3"){
+                if(posiciones[2]== palabraBuscada){
+                    document.getElementById("opciones").style.background="green"
+                    document.getElementById("aciertos").innerHTML= parseInt(document.getElementById("aciertos").innerHTML)+1    
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }else{
+                    document.getElementById("opciones").style.background="red"
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }
+            }
+            if(e.target.id== "op4"){
+                if(posiciones[3]== palabraBuscada){
+                    document.getElementById("opciones").style.background="green"
+                    document.getElementById("aciertos").innerHTML= parseInt(document.getElementById("aciertos").innerHTML)+1    
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }else{
+                    document.getElementById("opciones").style.background="red"
+                    setTimeout(() => {
+                        document.getElementById("opciones").style.background=""    
+                    }, 200);
+                    opciones()
+                }
+            }
+            
+        })
+
+
+        opciones()
+    </script>
+</body>
+</html>
