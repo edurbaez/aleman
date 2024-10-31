@@ -6,27 +6,32 @@
     <title>lista de palabras</title>
     <style>
         body{
-            display: flex;
+            
             flex-direction: column;
             justify-content: space-around;
             height: 90vh;
+            overflow: scroll;
         }
         footer{
+            margin-top: 50px;
             display: flex;
             width: 100%;
-            background: yellowgreen;
+            background: rgb(103, 150, 10);
             justify-content: space-around;
         }
-        div{
+        div {
             /*display: ;*/
             margin: auto;
             width: 90%;
             justify-content: space-around;
-        }
+            }
+        
+
         div div{
             padding: 20px;
             width: 50%;
             height: 50%;
+           
             display: flex;
             justify-content: center;
             align-items: center;
@@ -50,10 +55,15 @@
         button:active {
             background-color: #3e8e41;
         }
+        td, th{
+            border: 2px solid grey;
+            text-align: center;
+            font-size: 1.3rem;
+        }
     </style>
 </head>
 <body>
-    <div>
+    <div id="contenedorpalabra">
         <div id="p1"></div>
         <div id="p2"></div>
     </div>
@@ -71,6 +81,16 @@
         <button onclick="listaN(3)">lst4</button>
         <button onclick="listaN(4)">lst5</button>
         <button onclick="listaN(5)">lst6</button>
+        <button onclick="verlista(baseesp,basede)">desplegar lista</button>
+        
+    </div>
+    <div id="">
+        <table id="lista" style="width: 90%;border: 1px solid grey;">
+            <tr>
+                <th>uno</th>
+                <th>dos</th>
+            </tr>
+        </table>
     </div>
     <script>
         var p1 = document.getElementById("p1");
@@ -92,6 +112,7 @@
             palabras=[...baseesp.slice(inicio,fin)];
             traduccion=[...basede.slice(inicio,fin)];
             mostrarPalabra();
+            verlista(palabras,traduccion)
         }
         
         var visto= [];
@@ -204,12 +225,42 @@
 
         }
         
+       
+       
         function mostrarPalabra(){
             var index = getPalabra();
             p1.innerText = palabras[index];
             p2.innerText = traduccion[index];
         }
-        mostrarPalabra();
+
+        
+        function verlista(baseesp,basede){
+            //conbinar listas, para ordenar alfabeticamente
+            let listaConvinada= [];
+            for (let i = 0; i < baseesp.length; i++) {
+                listaConvinada.push(basede[i] + "-"+ baseesp[i]);
+                
+            }
+
+            document.getElementById("lista").innerHTML= `
+            <tr>
+                <th>aleman</th>
+                <th>espanol</th>
+            </tr>
+            `
+            listaConvinada.sort().forEach(e=>{
+                let valor= e.split("-")    
+                document.getElementById("lista").innerHTML+=
+                `
+                    <tr>
+                        <td>${valor[0]}</td>
+                        <td>${valor[1]}</td>
+                    </tr>
+                `
+            })    
+        }
+
+        listaN(0);
 
         // Call the function when the button is clicked
         //document.querySelector("button").addEventListener("click", leerTexto);
