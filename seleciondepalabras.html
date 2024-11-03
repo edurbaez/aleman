@@ -15,6 +15,7 @@
             width: 90%;
             background: rgba(29, 28, 28, 0.24);
             height: 80%;
+            overflow: scroll;
         }
         #palabra, #op2, #op1, #op3, #op4{
             box-shadow: rgba(255, 0, 0, 0.274) -1px 4px 1px 2px;
@@ -42,6 +43,11 @@
             border: 1px 1px solid black;
             transition: width 1s;
            overflow: hidden;
+        }
+        td, th{
+            border: 2px solid grey;
+            text-align: center;
+            font-size: 1.3rem;
         }
     </style>
 </head>
@@ -98,10 +104,14 @@
                 </svg>
             </div>
             
+            <button onclick="bases('inicial')">inicial</button>
             <button onclick="bases('verbos')">verbos</button>
             <button onclick="bases('sustantivos')">sustantivos</button>
             <button onclick="bases('advervios')">advervios</button>
             <button onclick="bases('advervios')">curso</button>
+            <button onclick="bases('duolingo')">duolingo</button>
+            <button onclick="bases('advervios')">libro miteinander</button>
+            
             <button onclick="bases('errores')">errores</button>
             
             
@@ -123,13 +133,26 @@
             <div id="op4"></div>
         </div>
     </div>
+    <hr>
+    <div id="">
+        <table id="lista" style="width: 90%;border: 1px solid grey;">
+            <tr>
+                <th>uno</th>
+                <th>dos</th>
+            </tr>
+        </table>
+    </div>  
 
     <script>
         //base con todas la palabras en español y aleman
-        var baseesp= ["viejo", "Adiós", "por favor", "Gracias", "curso de alemán", "Alemania", "diálogo", "Estados Unidos", "gratis", "Sentido", "bienvenido", "Soy", "mi nombre es", "vengo de", "Año", "continente", "país", "lección", "aprendiz", "Lugar", "decir", "Hora", "Nombre de pila", "continuar", "trabajar", "comenzar", "Hasta luego", "compañía", "¿Puedo presentarlo?", "genial", "puede", "Disculpe", "disculpar", "completo", "empresa, empresas", "ir", "cerca", "trabajo", "venir de", "largo, largo", "refrescar", "Construcción de máquinas", "Mes", "Pasantía", "conocernos", "encontrarse", "estudiar", "excelente", "la lección", "divertirse", "¿Qué?", "¿Cómo?", "¿Cómo estás?", "¿dónde?", "Semana", "¿De donde?", "residir", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "ambos", "Profesión", "¿Cuál es tu profesión?", "primero", "Familia", "preguntas", "feliz", "joven", "Kindergarten", "pequeño", "más", "Vecinos", "ya no", "¿Estás listo?", "hablar", "dulce", "casado", "Relacionado", "en realidad", "Tiempo", "similar", "proyector", "esto, esto, esto", "allá", "real", "algo completamente diferente", "película", "Pez", "Jardín", "juntos", "casa, casas", "trasero", "buscar", "poder", "lento", "computadora portátil", "posible", "debe", "buscar", "a menudo", "suceder", "plan", "presentación", "estoy planeando mi viaje", "había planeado mi viaje", "restaurante", "muchísimo", "muy", "pararse", "Verdadero", "entender", "repetir", "Ánimo", "Estoy de acuerdo con usted", "conocimiento", "raíz", "Palabra", "mirar", "miras de nuevo", "recibir", "convertirse", "rápido", "sustituto", "necesidad", "Lista de compras", "dio", "Dinero", "Verduras", "con alegría", "ciertamente", "Me gustaría", "comprar", "costo", "Comestibles", "mercado, mercados", "Fruta", "Precio", "por", "oferta especial", "Embalaje", "esperar", "Cambiar", "cuánto", "kilo", "gramos", "litro", "la lata", "Botella", "Cartulina", "el paquete", "Pedazo", "la bolsa", "¿Algo más?", "pero con mucho gusto.", "¿Algo más?", "pero con mucha alegría.", "¡Ah, ya!", "la crema", "Adiós", "EE.UU", "sentido", "Soy", "aprendiz", "Ubicación", "Buscar", "¿Puedo presentarlo?", "brillante", "perdón", "completo", "empresa, empresa", "vecindad", "Trabajar", "largo, largo", "refrescar", "Ingeniería Mecánica", "Conócenos", "encontrarse", "estudiar", "excelente", "la lección", "disfrutar", "¿El?", "¿Como?", "¿Cómo estás?", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "¿Cuál es tu trabajo?", "Primero", "pocos", "más", "¿Estás listo?", "Relacionado", "De hecho", "proyector", "real", "juntos", "trasero", "estoy planeando mi viaje", "había planeado mi viaje", "mucho", "detener", "VERDADERO", "Dirigir", "Estoy de acuerdo con usted", "ver", "miras de nuevo", "recibir", "Sustituto", "dio", "con alegría", "seguramente", "de", "Cambiar", "el paquete", "la bolsa", "¡Ah, ahora!"];
-        var basede= ["alt", "Auf Wiedersehen", "bitte", "danke", "Deutschkurs", "Deutschland", "Dialog", "die USA", "frei", "Herzlich", "willkommen", "ich bin", "ich heiße", "ich komme aus", "Jahr", "Kontinent", "Land", "Lektion", "Lerner", "Platz", "sagen", "Stunde", "Vorname", "weitermachen", "arbeiten", "beginnen", "Bis später", "Firma", "darf ich ihn vortellen?", "das ist toll", "dürfen", "Entschuldigung", "entschuldigen", "fertig", "Firma, Firmen", "gehen", "in der Nähe von", "Job", "kommen aus", "lang, lange", "laben", "Mashinenbau", "Monat", "Praktikum", "sich kennen", "sich treffen", "studieren", "toll", "das Unterricht", "viel spaß", "was?", "wie?", "wie gehts?", "wo?", "Woche", "woher?", "wohnen", "Wohnung", "ich bin hier seit einer Woche", "ich bin hier seit neun Monaten", "beide", "Beruf", "was machst du beruflich?", "erst", "Familie", "fragen", "glücklich", "jung", "Kindergarten", "klein", "mehr", "Nachbarn", "nicht mehr", "Seid ihr fertig?", "sprechen", "süß", "verheiratet", "Verwandte", "wirklich", "Zeit", "ähnlich", "Beamer", "dieser, diese, dieses", "dort", "echt", "etwas ganz anderes", "Film", "Fisch", "Garten", "gemeinsam", "Haus, Häuser", "hinten", "holen", "konnen", "langsam", "Laptop", "möglich", "müssen", "nachschlagen", "oft", "passieren", "planen", "Präsentation", "ich plane meine Fahre", "ich hatte meine Fahre geplant", "Restaurant", "sehr viel", "sehr", "stehen", "Stimmt", "verstehen", "wiederholen", "Stimmung", "ich stimme dich", "wissen", "Wurzel", "Wort", "nachschauen", "du schaust noch eimal nach", "bekommen", "werden", "schnell", "ersetzen", "brauchen", "Einkaufsliste", "gaben", "Geld", "Gemüse", "gern", "gewiss", "ich möchte", "kaufen", "kosten", "Lebensmittel", "Markt, Märkte", "Obst", "Preis", "pro", "Sonderangebot", "Verpackung", "warten", "Wechselgeld", "wie viel", "Kilo", "Gramm", "Liter", "die Dose", "Flasche", "Karton", "die Packung", "Stück", "die Tüte", "Nöch etwas?", "aber gern.", "Irgendetwas anderes?", "aber mit großer Freude.", "Ah, schon!", "die Sahne", "Tschüss", "USA", "Sinn", "Bin", "Lehrling", "Ort", "Unternehmen", "Kann ich es präsentieren?", "brillant", "Verzeihung", "vollständig", "Unternehmen, Unternehmen", "nahe", "Arbeit", "lang, lang", "auffrischen", "Maschinenbau", "Treffen Sie uns", "treffen", "Studie", "exzellent", "die Lektion", "genießen", "Das?", "Als?", "Wie geht es dir?", "Abteilung", "Ich bin seit einer Woche hier", "Ich bin seit neun Monaten hier", "Was ist Ihr Beruf?", "Erste", "wenig", "weiter", "Sind Sie bereit?", "Verwandt", "Tatsächlich", "Projektor", "real", "zusammen", "hinteren", "Ich plane meine Reise", "Ich hatte meine Reise geplant", "viel", "stoppen", "WAHR", "Kopf hoch", "Ich stimme Ihnen zu", "sehen", "Du schaust noch einmal", "erhalten", "Ersatz", "gab", "mit Freude", "sicherlich", "von", "Ändern", "das Paket", "die Tasche", "Oh, jetzt!"];
+        var baseesp= [];
+        var basede= [];
 
         const baseDeDatod= {
+            inicial:{
+                es:["viejo", "Adiós", "por favor", "Gracias", "curso de alemán", "Alemania", "diálogo", "Estados Unidos", "gratis", "Sentido", "bienvenido", "Soy", "mi nombre es", "vengo de", "Año", "continente", "país", "lección", "aprendiz", "Lugar", "decir", "Hora", "Nombre de pila", "continuar", "trabajar", "comenzar", "Hasta luego", "compañía", "¿Puedo presentarlo?", "genial", "puede", "Disculpe", "disculpar", "completo", "empresa, empresas", "ir", "cerca", "trabajo", "venir de", "largo, largo", "refrescar", "Construcción de máquinas", "Mes", "Pasantía", "conocernos", "encontrarse", "estudiar", "excelente", "la lección", "divertirse", "¿Qué?", "¿Cómo?", "¿Cómo estás?", "¿dónde?", "Semana", "¿De donde?", "residir", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "ambos", "Profesión", "¿Cuál es tu profesión?", "primero", "Familia", "preguntas", "feliz", "joven", "Kindergarten", "pequeño", "más", "Vecinos", "ya no", "¿Estás listo?", "hablar", "dulce", "casado", "Relacionado", "en realidad", "Tiempo", "similar", "proyector", "esto, esto, esto", "allá", "real", "algo completamente diferente", "película", "Pez", "Jardín", "juntos", "casa, casas", "trasero", "buscar", "poder", "lento", "computadora portátil", "posible", "debe", "buscar", "a menudo", "suceder", "plan", "presentación", "estoy planeando mi viaje", "había planeado mi viaje", "restaurante", "muchísimo", "muy", "pararse", "Verdadero", "entender", "repetir", "Ánimo", "Estoy de acuerdo con usted", "conocimiento", "raíz", "Palabra", "mirar", "miras de nuevo", "recibir", "convertirse", "rápido", "sustituto", "necesidad", "Lista de compras", "dio", "Dinero", "Verduras", "con alegría", "ciertamente", "Me gustaría", "comprar", "costo", "Comestibles", "mercado, mercados", "Fruta", "Precio", "por", "oferta especial", "Embalaje", "esperar", "Cambiar", "cuánto", "kilo", "gramos", "litro", "la lata", "Botella", "Cartulina", "el paquete", "Pedazo", "la bolsa", "¿Algo más?", "pero con mucho gusto.", "¿Algo más?", "pero con mucha alegría.", "¡Ah, ya!", "la crema", "Adiós", "EE.UU", "sentido", "Soy", "aprendiz", "Ubicación", "Buscar", "¿Puedo presentarlo?", "brillante", "perdón", "completo", "empresa, empresa", "vecindad", "Trabajar", "largo, largo", "refrescar", "Ingeniería Mecánica", "Conócenos", "encontrarse", "estudiar", "excelente", "la lección", "disfrutar", "¿El?", "¿Como?", "¿Cómo estás?", "Departamento", "He estado aquí por una semana", "Llevo aquí nueve meses", "¿Cuál es tu trabajo?", "Primero", "pocos", "más", "¿Estás listo?", "Relacionado", "De hecho", "proyector", "real", "juntos", "trasero", "estoy planeando mi viaje", "había planeado mi viaje", "mucho", "detener", "VERDADERO", "Dirigir", "Estoy de acuerdo con usted", "ver", "miras de nuevo", "recibir", "Sustituto", "dio", "con alegría", "seguramente", "de", "Cambiar", "el paquete", "la bolsa", "¡Ah, ahora!"],
+                de:["alt", "Auf Wiedersehen", "bitte", "danke", "Deutschkurs", "Deutschland", "Dialog", "die USA", "frei", "Herzlich", "willkommen", "ich bin", "ich heiße", "ich komme aus", "Jahr", "Kontinent", "Land", "Lektion", "Lerner", "Platz", "sagen", "Stunde", "Vorname", "weitermachen", "arbeiten", "beginnen", "Bis später", "Firma", "darf ich ihn vortellen?", "das ist toll", "dürfen", "Entschuldigung", "entschuldigen", "fertig", "Firma, Firmen", "gehen", "in der Nähe von", "Job", "kommen aus", "lang, lange", "laben", "Mashinenbau", "Monat", "Praktikum", "sich kennen", "sich treffen", "studieren", "toll", "das Unterricht", "viel spaß", "was?", "wie?", "wie gehts?", "wo?", "Woche", "woher?", "wohnen", "Wohnung", "ich bin hier seit einer Woche", "ich bin hier seit neun Monaten", "beide", "Beruf", "was machst du beruflich?", "erst", "Familie", "fragen", "glücklich", "jung", "Kindergarten", "klein", "mehr", "Nachbarn", "nicht mehr", "Seid ihr fertig?", "sprechen", "süß", "verheiratet", "Verwandte", "wirklich", "Zeit", "ähnlich", "Beamer", "dieser, diese, dieses", "dort", "echt", "etwas ganz anderes", "Film", "Fisch", "Garten", "gemeinsam", "Haus, Häuser", "hinten", "holen", "konnen", "langsam", "Laptop", "möglich", "müssen", "nachschlagen", "oft", "passieren", "planen", "Präsentation", "ich plane meine Fahre", "ich hatte meine Fahre geplant", "Restaurant", "sehr viel", "sehr", "stehen", "Stimmt", "verstehen", "wiederholen", "Stimmung", "ich stimme dich", "wissen", "Wurzel", "Wort", "nachschauen", "du schaust noch eimal nach", "bekommen", "werden", "schnell", "ersetzen", "brauchen", "Einkaufsliste", "gaben", "Geld", "Gemüse", "gern", "gewiss", "ich möchte", "kaufen", "kosten", "Lebensmittel", "Markt, Märkte", "Obst", "Preis", "pro", "Sonderangebot", "Verpackung", "warten", "Wechselgeld", "wie viel", "Kilo", "Gramm", "Liter", "die Dose", "Flasche", "Karton", "die Packung", "Stück", "die Tüte", "Nöch etwas?", "aber gern.", "Irgendetwas anderes?", "aber mit großer Freude.", "Ah, schon!", "die Sahne", "Tschüss", "USA", "Sinn", "Bin", "Lehrling", "Ort", "Unternehmen", "Kann ich es präsentieren?", "brillant", "Verzeihung", "vollständig", "Unternehmen, Unternehmen", "nahe", "Arbeit", "lang, lang", "auffrischen", "Maschinenbau", "Treffen Sie uns", "treffen", "Studie", "exzellent", "die Lektion", "genießen", "Das?", "Als?", "Wie geht es dir?", "Abteilung", "Ich bin seit einer Woche hier", "Ich bin seit neun Monaten hier", "Was ist Ihr Beruf?", "Erste", "wenig", "weiter", "Sind Sie bereit?", "Verwandt", "Tatsächlich", "Projektor", "real", "zusammen", "hinteren", "Ich plane meine Reise", "Ich hatte meine Reise geplant", "viel", "stoppen", "WAHR", "Kopf hoch", "Ich stimme Ihnen zu", "sehen", "Du schaust noch einmal", "erhalten", "Ersatz", "gab", "mit Freude", "sicherlich", "von", "Ändern", "das Paket", "die Tasche", "Oh, jetzt!"]
+            },
             verbos:{
                     es:[
                     "haber/ser", "tener", "llegar a ser", "poder", "deber", "decir", "hacer", "dar", "venir", "deber", "querer", "ir", "saber", "ver", "dejar", "estar de pie", "encontrar", "quedarse", "estar acostado", "llamarse", "pensar", "tomar", "hacer", "tener permiso", "creer", "sentir", "hablar", "traer", "vivir", "preguntar", "ayudar", "jugar", "trabajar", "seguir", "hablar", "escuchar", "conducir", "escribir", "leer", "correr", "tirar", "poner", "recibir", "comprar", "buscar", "olvidar", "perder", "pagar", "costar", "comer", "beber", "dormir", "sentarse", "caer", "subir", "esperar", "pasar", "aprender", "entender", "darse cuenta", "recordar", "gustar", "amar", "odiar", "necesitar", "intentar", "lograr", "explicar", "mostrar", "tocar", "oler", "saborear", "tocar", "bailar", "cantar", "pintar", "dibujar", "hacer manualidades", "coser", "tejer", "hacer ganchillo", "cocinar", "hornear", "asar", "hacer a la parrilla", "cortar", "picar", "pelar", "mezclar", "revolver", "agitar", "verter", "remojar", "escurrir", "sazonar", "probar", "tragar", "masticar", "respirar", "abrir", "cerrar", "desechar", "guardar", "reír", "llorar", "sonreír", "gritar", "trepar", "saltar", "correr", "hacer senderismo", "nadar", "bucear", "navegar", "remar", "montar a caballo", "volar", "deslizarse", "deslizarse", "rodar", "lanzar", "atrapar", "cazar", "disparar", "encontrar", "abrazar", "besar", "golpear", "patear", "boxear", "arañar", "morder", "lamer", "cavar", "construir", "arreglar", "romper", "perforar", "frotar", "amasar", "secar", "lavar", "limpiar", "aspirar", "pulir", "imprimir", "pegar", "atar", "doblar", "enhebrar", "tejer", "hacer nudos", "hilar", "forjar", "tallar", "serrar", "cepillar", "lijar", "limar", "barnizar", "pintar", "barnizar", "construir", "construir muros", "enlucir", "alicatar", "empapelar"
@@ -161,9 +184,20 @@
             errores:{
                 es:[],
                 de:[]
+            },
+            miteinander:{
+                es:[],
+                de:[]
+            },
+            duolingo:{
+                es:["Tomamos el tren al centro de la ciudad.", "Está ubicado al oriente de la ciudad.", "Puedes ver que el centro está en el sur.", "Está contento en su propia comunidad.", "El clima en la ciudad y sus alrededores es frío.", "Eso no cambia nada entre nosotros.", "¿Cómo se ve el reloj desde abajo?", "así es.", "Hay algunas personas interesantes aquí.", "son siempre las mismas personas", "necesario", "Investigación", "así es como puedes mirarlo", "Se aplican ambas razones posibles.", "Es realmente una velada encantadora.", "allá atrás", "Le gustan los libros sencillos.", "es su turno", "De lo contrario", "lo", "participar", "Incluso llegamos temprano", "Cierra la puerta desde afuera.", "A través de esto", "¿Qué sé yo?", "actualmente", "De eso no se trata", "encima", "no aquí", "son las mismas personas", "diferente", "Razón", "la emergencia", "Él nos habló", "esa era mi casa", "ella fue al doctor", "el alojamiento", "anterior", "estas son mis viejas llaves", "responsable", "responsable", "Sin ti no estaríamos aquí hoy", "la hierba", "Antes (adj)", "te ves genial", "dejar", "omitir, dejar pasar", "extrañar", "te ves genial", "Perdí el autobús", "aceptar", "fundar", "encontré una empresa", "dormitorio", "conocido", "secretamente", "lo digo en serio", "realmente me gusta ella", "no tengo ganas", "el lugar", "todo está bien contigo", "es mio", "espectáculo", "¿Vas a almorzar?", "el saludo", "Eso costará más", "vivirás con nosotros", "no iré hoy", "mientras", "Duerme mientras su amigo habla.", "abierto", "recordar", "cuyo", "de aquí en adelante", "La práctica hace la perfección", "La educación comienza en casa.", "¿Para qué necesitas esto?", "Estarán cerrados", "a más tardar", "el almacén", "la determinación", "la entrega", "Puedes apoyarnos", "el pago", "el uso", "la imaginacion", "Comparación", "positivo", "la referencia", "de peligro", "la perdida", "Promedio", "la financiación", "la mediación", "tímido", "cooperación", "Acciones", "Ajustes", "el alcance", "el manejo", "Aplicaciones", "la entrada", "Compromisos", "la apertura", "el enfoque"],
 
+                de:["Wir fahren mit der Bahn ins Stadtzentrum", "Es liegt im Osten der stadt", "Man kann sehen, dass das Zentrum im Süden ist", "Er ist in seiner eigenen Gemeinde zufrieden", "Das Klima in de Stadt und in der Umgebung ist kalt", "Das ändert nichts zwischen uns", "Wie sieht die Uhr von unnen aus?", "so ist das nun mal.", "Ein paar interessante Leute sind hier", "das sind immer die gleichen Leute", "notwendig", "Untersuchung", "so kann man es betrachten", "Beide möglichen Gründe treffen zu", "es ist wirklich eun schöner Abend", "da hinten", "die einfachen Bücher gefallen ihm", "Er ist dran", "Ansonsten", "daran", "teilnehmen", "wir sind sogar früh", "Er schließt die Tür von außen", "Dadurch", "Was weiß ich denn?", "derzeit", "Darum geht es hier nicht", "vorbei", "hier nicht", "es sind die gleichen Leute", "unterschiedliche", "Grund", "die Notfall", "Er sprach mit uns", "Das war mein Haus", "Sie ging zum Arzt", "die Unterkunft", "ehemaligen", "das sind meine alten Schlüssel", "zuständig", "verantwortlich", "Ohne euch wären wir heute nicht hier", "das Gras", "Bevor", "Du siehst super aus", "verlassen", "verpasssen", "vermissen", "Du siehst toll aus", "Ich habe den Bus verpasst", "akzeptieren", "gefunden", "ich gefunde eine firma", "Schlafzimmer", "bekannt", "heimlich", "Ich meine es ernst", "ich mag sie unheimlich", "ich habe kein Lust", "die Stelle", "dir geht es gut", "Es gehört mir", "zeigen", "Gehst du zum Mittagessen?", "Die Anrede", "Das wird mehr kosten", "du wirst bei uns wohnen", "ich werde heute nicht gehen", "während", "Er schläft, während sein Freund spricht", "offen", "merken", "dessen", "ab jetzt", "Übung macht den meister", "Erziehung beginnt zu Hause", "Wofür brauchst du das?", "Sie werden geschlossen haben", "spätestens", "das Lager", "die Bestimmung", "die Lieferung", "Sie können uns unterstützen", "die Zahlung", "die Verwendung", "die Vorstellun", "Vergleich", "positiv", "der Bezug", "der Gefahr", "der Verlust", "Durschchnitt", "die Förderung", "die Vermittlung", "schüchtern", "Kooperation", "Anteile", "Einstellungen", "der Umfang", "der Umgang", "Anwendungen", "der Eintritt", "Verpflichtungen", "die Eröffnung", "der Ansatz"]
             }
+
         }
+
+        // prepara el arrai de palabra desde un ob base de datos
         function bases(numero) {
             var op= 
             baseesp= baseDeDatod[numero]["es"]
@@ -171,7 +205,8 @@
 
             document.getElementById("titulo").innerHTML= numero
             document.getElementById("tiempo").innerHTML= baseesp.length
-            
+            vistos=[]
+            verlista(baseesp,basede)
             opciones()
             
         }
@@ -193,7 +228,7 @@
             return num
         }
 
-        // carga valoste en las variables, y actualiza el dom
+        // carga valores en las variables de juego, y actualiza el dom
         function opciones(){
             palabraBuscada= generador()
             if(vistos.includes(palabraBuscada)){
@@ -335,7 +370,39 @@
                     desplegarmenu()
             }
         })
-        opciones()
+
+
+        // recibe las lista idioma nativo e idioma a aprender, las depliega en una elemento tabla con el Id lista
+        function verlista(baseesp,basede){
+            //conbinar listas, para ordenar alfabeticamente
+            let listaConvinada= [];
+            for (let i = 0; i < baseesp.length; i++) {
+                listaConvinada.push(basede[i] + "-"+ baseesp[i]);
+                
+            }
+
+            document.getElementById("lista").innerHTML= `
+            <tr>
+                <th>aleman</th>
+                <th>espanol</th>
+            </tr>
+            `
+            listaConvinada.sort().forEach(e=>{
+                let valor= e.split("-")    
+                document.getElementById("lista").innerHTML+=
+                `
+                    <tr>
+                        <td>${valor[0]}</td>
+                        <td>${valor[1]}</td>
+                    </tr>
+                `
+            })    
+        }
+
+
+
+
+        bases("inicial")
 
     </script>
 </body>
