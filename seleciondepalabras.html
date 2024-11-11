@@ -6,12 +6,14 @@
     <title>selecion de palabras    </title>
     <style>
         *{
-            padding: 10px;
+            padding: 5px;
             border-radius: 5px;
-            font-size: 30px;
+            font-size: 20px;
             border: px solid black;
+            margin: auto;
         }
         body{
+            position: relative;
             width: 90%;
             background: rgba(29, 28, 28, 0.24);
             height: 80%;
@@ -30,8 +32,14 @@
             margin-left: 40px;
         }
         #tablero{
+            margin: auto;
+            width: 90%;
             display: flex;
             justify-content: space-around;
+        }
+        #juego{
+            margin: auto;
+            width: 90%;
         }
         #menu{
             position: fixed;
@@ -44,10 +52,18 @@
             transition: width 1s;
            overflow: hidden;
         }
+        #lista{
+            position: relative;
+            margin: auto;
+            width: 90%;
+            border: 1px solid grey;
+            
+        }
+        
         td, th{
-            border: 2px solid grey;
+            border-bottom: 2px solid grey;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -134,8 +150,8 @@
         </div>
     </div>
     <hr>
-    <div id="">
-        <table id="lista" style="width: 90%;border: 1px solid grey;">
+    <div id="" >
+        <table id="lista" >
             <tr>
                 <th>uno</th>
                 <th>dos</th>
