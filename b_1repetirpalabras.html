@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B1 - lista de palabras</title>
+    <style>
+        body{
+            
+            flex-direction: column;
+            justify-content: space-around;
+            height: 90vh;
+            overflow: scroll;
+        }
+        footer{
+            margin-top: 50px;
+            display: flex;
+            width: 100%;
+            background: rgb(103, 150, 10);
+            justify-content: space-around;
+        }
+        div {
+            /*display: ;*/
+            margin: auto;
+            width: 90%;
+            justify-content: space-around;
+            }
+        
+
+        div div{
+            padding: 20px;
+            width: 50%;
+            height: 50%;
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            border: 1px solid black;
+        }
+        button {
+            flex: 1 1 auto;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border: #173819 solid 3px;
+        }
+
+        button:hover {
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+        #lista{
+            width: 90%;
+            border: 1px solid grey;
+            
+        }
+        td, th{
+            border: 2px solid grey;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedorpalabra">
+        <div id="p1"></div>
+        <div id="p2"></div>
+    </div>
+    <footer>
+        <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
+        <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
+        <button id="leer" onclick="Leer()">Leer</button>
+        
+    </footer>
+    <hr>
+    <div style="display: flex;margin: 0%;">
+        <button onclick="listaN(0)">lst1</button>
+        <button onclick="listaN(1)">lst2</button>
+        <button onclick="listaN(2)">lst3</button>
+        <button onclick="listaN(3)">lst4</button>
+        <button onclick="listaN(4)">lst5</button>
+        <button onclick="listaN(5)">lst6</button>
+        <button onclick="verlista(baseesp,basede)">desplegar lista</button>
+        
+    </div>
+    <div id="">
+        <table id="lista" style="">
+            <tr>
+                <th>uno</th>
+                <th>dos</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+
+        //base con todas la palabras en español y aleman
+        const baseesp= ["el pastelito", "la ronda", "el curso de integración", "urbano", "el desafío", "fluir", "la coincidencia", "felicitar", "felicitado", "genial", "útil", "la posibilidad", "la formación adicional", "la industria", "el maestro", "financiero", "la financiación", "el clima", " en tu lugar", "en tu lugar", "el cuarto", "la ventaja", "la desventaja", "la dieta", "relativo", "delgado", "el estado de ánimo", "la comparación", "el progreso", "la grasa", "bajo en sal", "bajo en grasas", "reconocer", "ha reconocido", "analizar", "ha analizado", "medida", "ha medido", "del paso", "elegir", "ha seleccionado", "advertir", "prevenido", "haz un esfuerzo", "hizo un esfuerzo", "controlar", "ha comprobado", "la terapia", "el hombro", "físicamente", "la enfermedad", "la operación", "el terapeuta", "el terapeuta", "tratar", "ha tratado", "el tratamiento", "activo", "afrontar", "ha hecho frente", "el musculo", "el calor", "el metodo", "reaccionar", "él reacciona", "probar", "ha intentado", "daño", "hizo daño", "probablemente", "especial", "legalmente", "necesidad", "ha requerido", "el zachlung", "la parte", "el organo", "cúrate a ti mismo", "ha sanado", "la diferencia", "en absoluto", "por cierto", "controlar", "comprobado", "la dieta", "perezoso", "a pesar de", "la recuperación", "no hay señales de recuperación", "a saber", "estar en silencio", "estaba en silencio", "la reacción", "el hábito", "constante", "la presión arterial", "la sangre", "la presión", "el pulso", "consumir", "ha consumido", "detener", "la actuación", "el papel", "el peligro", "observar", "recordar", "ha notado", "la participación", "la precaución", "regularmente", "la vacuna", "la membresía", "el fumador", "valioso", "prueba", "ha sido probado", "la entrevista", "el miembro", "especial", "participar", "participó", "hacer deporte", "sensitivo", "extraño", "negativo", "la rutina diaria", "agradable", "la prisa", "infancia", "fiel", "sentirse bien", "me sentí cómodo", "confiable", "la aventura", "máximo", "marcar", "ha marcado", "marco la pagina", "lo mismo / lo mismo / lo mismo"];
+        const basede= ["das Gebäck", "die Runde", "der Integrationskurs", "städtisch", "die Herausforderung", "fließen", "der Zufall", "gratulieren", "hat gratuliert", "das ist klasse", "nützlich", "die Möglichkeit", "die Weiterbildung", "die Industrie", "der Meister", "finanzielle", "die Förderung", "das Klima", " an deiner Stelle", "an Ihrer Stelle", "das Viertel", "der Vorteil", "der Nachteil", "die Ernährung", "relativ", "schlank", "die Laune", "der Vergleich", "der Fortschritt", "das Fett", "salzarm", "fettarm", "erkennen", "hat erkannt", "analysieren", "hat analysiert", "messen", "hat gemessen", "des Schritt", "auswählen", "hat auswählt", "warnen", "hat gewarnt", "sich anstrengen", "hat sich angestrengt", "prüfen", "hat geprüft", "die Therapie", "die Schulter", "körperlich", "die Krankheit", "die Operation", "der Therapeut", "die Therapeutin", "behandeln", "hat behandelt", "die Behandlung", "aktiv", "zurechtkommen", "ist zurechtgekommen", "der Muskel", "die Wärme", "die Methode", "reagieren", "het reagiert", "probieren", "hat probiert", "schaden", "hat geschadet", "wohl", "speziell", "gesetzlich", "benötigen", "hat benötigt", "die Zachlung", "der Teil", "das Organ", "sich heilen", "hat geheilt", "der Unterschied", "überhaupt", "übrigens", "checken", "hat gecheckt", "die Diät", "faul", "obwohl", "die Erholung", "von Erholung keine Spur", "nämlich", "schweigen", "hat geschwiegen", "die Reaktion", "die Gewohnheit", "ständig", "der Blutdruck", "das Blut", "der Druck", "der Puls", "verbrauchen", "het verbraucht", "halt", "die Leistung", "die Rolle", "die Gefahr", "beachten", "erinnern", "hat beachtet", "die Teilnahme", "die Vorsorge", "regelmäßig", "die Impfung", "die Mitgliedschaft", "der Raucher", "wertvoll", "testen", "hat sich getestet", "das Interview", "das Mitglied", "besonder", "teilnehmen", "hat teilgenommen", "Sport treiben", "sinnvoll", "seltsam", "negativ", "der Tagesablauf", "angenehm", "die Eile", "die Kindheit", "treu", "sich wohlfühlen", "hat sich wohlgefühlt", "zuverlässig", "das Abenteuer", "maximal", "ankreuzen", "hat angekreuzt", "ich ankreuze die Seite", "derselbe / diesalbe / dasselbe"];
+        //copia los valores de la base de datos del 1 al 100 usanfo object asing
+
+        var palabras=[...baseesp.slice(0,100)];;
+        var traduccion=[...basede.slice(0,100)];; 
+        
+
+        //divide la base de palabras en listas de 100 palabras para mostrarlas 
+        function listaN(n){
+            var inicio=n*100
+            var fin=inicio+100
+            palabras=[...baseesp.slice(inicio,fin)];
+            traduccion=[...basede.slice(inicio,fin)];
+            mostrarPalabra();
+            verlista(palabras,traduccion)
+        }
+        
+        var visto= [];
+        auto = auto;
+        dual = false;
+
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var intentos = 0;
+        function getPalabra(){
+            var index = getRandomInt(palabras.length);
+            while(visto.includes(index)&& intentos<10){
+                return getPalabra();
+                intentos++;
+                console.log("intenton",intentos);
+                
+            }
+            if(visto.length == palabras.length -3){
+                    visto = [];
+                    
+            }
+            visto.push(index);
+            return index;
+        }
+       
+        
+
+        // formuala para leer el innertext de un elemento que capture el evento en utterance y llame la funcion
+        var manejoDual= false;
+        var idioma = "de";
+        function leerTexto() {
+            var texto;    
+            idioma = "de";
+            texto= p2.innerText; 
+            if(dual){
+                if(manejoDual){
+                    idioma = "es";
+                    texto= p1.innerText; 
+                    manejoDual = false;
+                }else{
+                    idioma ="de";
+                    texto= p2.innerText; 
+                    manejoDual = true;
+                }
+            }
+            
+            var utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = idioma;
+            speechSynthesis.speak(utterance);
+            
+            
+            //idioma = idioma=="es-ES"?"de-DE":"es-ES";
+            //texto= texto==p1.innerText?p2.innerText:p1.innerText;
+            //if (speechSynthesis.speaking) {
+            //    console.log("Leyendo el texto");
+            //}
+            if(auto){
+                utterance.onend = function() {     
+                    setTimeout(() => {    
+                        if(idioma=="de"){
+                            mostrarPalabra();    
+                        }
+                        leerTexto();
+                        
+                    }, 500);
+                }
+                
+
+
+            }
+            
+        }
+        function Auto(){
+            document.getElementById("auto").innerText = auto==true?"auto:off":"auto: on";
+            
+            if(auto){
+                document.getElementById("auto").style.backgroundColor = "red";
+            }else{
+                document.getElementById("auto").style.backgroundColor = "green";
+            }
+
+            auto= auto==false?true:false
+        }        
+        function Dual(){
+            document.getElementById("dual").innerText = dual==true?"de":"es-de";
+            
+            if(dual){
+                document.getElementById("dual").style.backgroundColor = "red";  
+            }else{
+                document.getElementById("dual").style.backgroundColor = "green";
+            }
+
+            dual= dual==false?true:false
+        }
+        function Leer(){
+            
+            if(document.getElementById("leer").innerText == "activo"){
+                location.reload()
+                
+            }
+            if(document.getElementById("leer").innerText == "Leer"){
+                document.getElementById("leer").innerHTML = "activo";
+                document.getElementById("leer").onclick = "Leer()";
+                leerTexto()
+                  
+            }
+
+
+        }
+        
+       
+       
+        function mostrarPalabra(){
+            var index = getPalabra();
+            p1.innerText = palabras[index];
+            p2.innerText = traduccion[index];
+        }
+
+        // recibe las lista idioma nativo e idioma a aprender, las depliega en una elemento tabla con el Id lista
+        function verlista(baseesp,basede){
+            //conbinar listas, para ordenar alfabeticamente
+            let listaConvinada= [];
+            for (let i = 0; i < baseesp.length; i++) {
+                listaConvinada.push(basede[i] + "-"+ baseesp[i]);
+                
+            }
+
+            document.getElementById("lista").innerHTML= `
+            <tr>
+                <th>aleman</th>
+                <th>espanol</th>
+            </tr>
+            `
+            listaConvinada.sort().forEach(e=>{
+                let valor= e.split("-")    
+                document.getElementById("lista").innerHTML+=
+                `
+                    <tr>
+                        <td>${valor[0]}</td>
+                        <td>${valor[1]}</td>
+                    </tr>
+                `
+            })    
+        }
+
+        listaN(0);
+
+        // Call the function when the button is clicked
+        //document.querySelector("button").addEventListener("click", leerTexto);
+    </script>
+</body>
+</html>
