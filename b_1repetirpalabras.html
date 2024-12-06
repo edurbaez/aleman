@@ -13,7 +13,7 @@
             overflow: scroll;
         }
         footer{
-            margin-top: 50px;
+            margin-top: 10px;
             display: flex;
             width: 100%;
             background: rgb(103, 150, 10);
@@ -55,6 +55,8 @@
             background-color: #3e8e41;
         }
         #lista{
+            max-height: 10px;
+            overflow: hidden;          
             width: 90%;
             border: 1px solid grey;
             
@@ -64,20 +66,64 @@
             text-align: center;
             font-size: 1.3rem;
         }
+
+        /*======== selecion de palabras==========*/
+        #palabra, #op2, #op1, #op3, #op4{
+            box-shadow: rgba(255, 0, 0, 0.274) -1px 4px 1px 2px;
+            text-align: center;
+        }
+        #palabra{
+            background: rgba(29, 28, 28, 0.34);
+            font-size: 1.2rem;
+        }
+        header h1{
+            padding: 0;
+            margin-left: 40px;
+        }
+        #tablero{
+            margin: auto;
+            width: 90%;
+            display: flex;
+            justify-content: space-around;
+        }
+        #juego{
+            margin: auto;
+            width: 90%;
+        }
+        #menu{
+            position: fixed;
+            background: rgba(1, 1, 32, 0.281);
+            width: 40px;
+            height: 32px;
+            padding: 0;
+            margin: 0;
+            border: 1px 1px solid black;
+            transition: width 1s;
+           overflow: hidden;
+        }
+
     </style>
 </head>
 <body>
+    <div id="ejercicio" style="margin: 10px;text-align: center;">
+        <button>repetir</button>
+        <button>selecionar</button>
+    </div>
     <div id="contenedorpalabra">
         <div id="p1"></div>
         <div id="p2"></div>
     </div>
-    <footer>
-        <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
-        <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
-        <button id="leer" onclick="Leer()">Leer</button>
-        
-    </footer>
     <hr>
+    
+    <hr>
+    <div id="padre-lista" style="max-height: 10px; overflow: hidden">
+        <table id="lista" >
+            <tr>
+                <th>uno</th>
+                <th>dos</th>
+            </tr>
+        </table>
+    </div>
     <div style="display: flex;margin: 0%;">
         <button onclick="listaN(0)">lst1</button>
         <button onclick="listaN(1)">lst2</button>
@@ -85,17 +131,17 @@
         <button onclick="listaN(3)">lst4</button>
         <button onclick="listaN(4)">lst5</button>
         <button onclick="listaN(5)">lst6</button>
-        <button onclick="verlista(baseesp,basede)">desplegar lista</button>
+        <button onclick="mostrarlista()">desplegar lista</button>
         
     </div>
-    <div id="">
-        <table id="lista" style="">
-            <tr>
-                <th>uno</th>
-                <th>dos</th>
-            </tr>
-        </table>
-    </div>
+
+    <footer >
+        <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
+        <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
+        <button id="leer" onclick="Leer()">Leer</button>
+        
+    </footer>
+
     <script>
         var p1 = document.getElementById("p1");
         var p2 = document.getElementById("p2");
@@ -237,6 +283,18 @@
             p2.innerText = traduccion[index];
         }
 
+        //
+        function mostrarlista(){
+            if (document.getElementById('padre-lista').style["max-height"]== "10px") {
+                document.getElementById('padre-lista').setAttribute('style','max-height:auto')
+
+            }else{
+                document.getElementById('padre-lista').setAttribute('style','max-height: 10px; overflow: hidden')
+
+            }
+
+            
+        }
         // recibe las lista idioma nativo e idioma a aprender, las depliega en una elemento tabla con el Id lista
         function verlista(baseesp,basede){
             //conbinar listas, para ordenar alfabeticamente
