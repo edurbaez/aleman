@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>curso b1</title>
+    <style>
+        *{
+            margin: 10px;
+            box-shadow: 1px 1px 3px black;
+            text-align: center;
+            font-size: 25px;
+        }
+        #tablero {
+            margin-top: 0;
+            display: flex;
+            justify-content: space-around;
+            flex: auto;
+            
+        }
+        #tablero div{
+            font-size: 0.8rem;
+        }
+        #titulotablero, #titulotablero div{
+            box-shadow: 0px 0px 0px black;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            flex: auto;
+        }
+
+        #palabra{
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="menu">
+            <h3>menu</h3>
+            <div id="elementos">
+                <div id="palabras">p</div>
+                <div id="palabras">a1</div>
+                <div id="palabras">a2</div>
+                <div id="palabras">a3</div>
+                <div id="palabras">a4</div>
+            </div>
+        </div>
+    </header>
+    <div id="seleccionarpalabra">
+        <h3>selecion de palabras</h3>
+        <div id="titulotablero">
+            <div id="">errores</div>
+            <div id="">aciertos</div>
+            <div id="">tiempo</div>
+        </div>
+        <div id="tablero">
+            <div id="errores">0</div>
+            <div id="aciertos">0</div>
+            <div id="tiempo">3</div>
+        </div>
+        <div id="juego">
+            <div id="palabra">palabra</div>
+            <div id="opciones">
+                <div id="op1">1</div>
+                <div id="op2">2</div>
+                <div id="op3">3</div>
+                <div id="op4">4</div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div id="repetir">
+        <h3>repetir palabras</h3>
+        <div id="contenedorpalabra">
+            <div id="p1">p</div>
+            <div id="p2">p</div>
+        </div>
+        <hr>
+    </div>
+    <div id="formarfrase">
+
+    </div>
+</body>
+</html>
