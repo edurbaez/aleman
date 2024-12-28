@@ -34,12 +34,12 @@
 
             const text = textarea.value;
             // expresion regula para quielar los caracteres especiales y mantener las letras incluyendo la ñ, é, á, í, ó, ú
-            const regex = /[^\w\s/\é\á\í\ó\ú\ü\ö]/g;
+            const regex = /[^\w\s\é\á\í\ó\ú\ü\ö]|\d/g;
             const cleanedLine = text.replace(regex, '');
             const lines = cleanedLine.split(' ');
-            const lowercaseLines = lines.map(line => line.toLowerCase());
+            //const lowercaseLines = lines.map(line => line.toLowerCase());
             
-            unique(lowercaseLines).forEach(line => {
+            unique(lines).forEach(line => {
                 n++;
                 npalabra.textContent = n;
                 const li = document.createElement('li');
@@ -51,10 +51,23 @@
 
         // funcion para convertin un array en un set
         function unique(arr) {
-            return Array.from(new Set(arr));
+            const uniqueArray = Array.from(new Set(arr));
+            return uniqueArray.sort((a, b) => a.localeCompare(b));
         }
 
-
+        //funcion para solicitar le traduccion de una palabra  
+        async function translateWord(word) {
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=de&tl=es&dt=t&q=${encodeURIComponent(word)}`;
+            try {
+                const response = await fetch(url);
+                const result = await response.json();
+                return result[0][0][0];
+            } catch (error) {
+                console.error('Error translating word:', error);
+                return word;
+            }
+        }
+        
         
         
     </script>
