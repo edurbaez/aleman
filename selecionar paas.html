@@ -66,9 +66,9 @@
 <body>
     <textarea name="" id=""></textarea>
     <button>procesar</button>
-    <span>
-
+        <!---->
     <div>
+        <div>
         <button onclick="toggleMenu()">Menu</button>
         <div id="dropdownMenu" style="display: none;">
             <button onclick="idioma = 'es'">espanol</button>
@@ -77,7 +77,7 @@
             <button onclick="idioma = 'ru'">ruso</button>
             <button>botton 5</button>
         </div>
-    </div></span>
+    </div>
     <script>
         function toggleMenu() {
             const menu = document.getElementById('dropdownMenu');
@@ -88,6 +88,7 @@
             }
         }
     </script>
+    <!---->
     <div>
         <h2>lista <strong id="npalabra"></strong></h2>
         <ul id="paas"></ul>
@@ -102,11 +103,12 @@
         const npalabra = document.getElementById('npalabra');
         var n = 0;
         var idioma = 'es';
+
         btn.addEventListener('click',()=>{
 
             const text = textarea.value;
             // expresion regula para quielar los caracteres especiales y mantener las letras incluyendo la ñ, é, á, í, ó, ú
-            const regex = /[^\w\s\é\á\ä\í\ó\ú\ü\ö]|\d/g;
+            const regex = /[^\w\s\é\á\ä\í\ß\ó\ú\ü\ö]|\d/g;
             const cleanedLine = text.replace(regex, '');
             const lines = cleanedLine.split(' ');
             //const lowercaseLines = lines.map(line => line.toLowerCase());
@@ -114,11 +116,9 @@
             unique(lines).forEach((line, index) => {
                 translateWord(idioma, line);
             });
-            
-            
-            
+            console.log(unique(lines));
+        
         });
-
 
 
 
@@ -130,9 +130,12 @@
 
         //funcion para solicitar le traduccion de una palabra  
         async function translateWord(idi, word) {
-            
+            if (Array.isArray(word)) {
+                    word = word.join('.').replace(/,/g, '. ');
+                }
             const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=de&tl=${idi}&dt=t&q=${encodeURIComponent(word)}`;
             try {
+               
                 const response = await fetch(url);
                 const result = await response.json();
                 var resultado = result[0][0][0];
@@ -160,8 +163,9 @@
             }
         }
         
-        
+  
         
     </script>
+
 </body>
 </html>
