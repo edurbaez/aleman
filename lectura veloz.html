@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Lectura Rápida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #text {
+        text-align: center;
+            width: 100%;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #display {
+            text-align: center;
+            font-size: 28px;
+            margin-top: 20px;
+            color: #333;
+            background-color: #dacdcd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Aplicación de Lectura Rápida</h1>
+    <textarea id="text" placeholder="Ingrese el texto aquí..."></textarea>
+    <br>
+    <p id="wpm">Palabras por minuto: <span id="wpmValue">0</span></p>
+    <button id="npalabras" onclick="npalabras()">1</button>
+    <button id="startButton">Iniciar Lectura</button>
+    <div id="display"></div>
+<script>
+
+        
+        let wpm = 300; // Default words per minute
+        var twowords = false;
+        document.getElementById('wpmValue').textContent = wpm;
+
+        function npalabras(){
+            twowords= twowords==true ? twowords= false : twowords = true;
+            if(twowords==true){
+                document.getElementById('npalabras').textContent = "2";
+            }else{
+                document.getElementById('npalabras').textContent = "1";
+            }   
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowUp') {
+                wpm += 10;
+            } else if (event.key === 'ArrowDown') {
+                wpm -= 10;
+            }
+            document.getElementById('wpmValue').textContent = wpm;
+        });
+
+        document.getElementById('startButton').addEventListener('click', function() {
+            const text = document.getElementById('text').value;
+            const words = text.split(' ');
+            let index = 0 ;
+            const display = document.getElementById('display');
+
+            function showNextWord() {
+                if (index < words.length && twowords==true) {
+                    display.textContent = words[index] + " " + words[index+1];
+                    index= index +2;
+                    setTimeout(showNextWord, 60000/wpm); // Adjust the speed here (in milliseconds)
+                }
+                if (index < words.length && twowords==false) {
+                    display.textContent = words[index];
+                    index++;
+                    setTimeout(showNextWord, 60000/wpm); // Adjust the speed here (in milliseconds)
+                }
+
+            }
+            console.log(words.length);
+            showNextWord();
+        });
+        function calculateInterval(wpm) {
+            return 60000 / wpm;
+        }
+        // funcion que calcula el tiempo de duracion de la lectura  
+        function calculateTime(words, wpm) {
+            return (words.length / wpm) * 60;
+        }
+        
+    </script>
+</body>
+</html>
