@@ -8,23 +8,52 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
         }
         #text {
-        text-align: center;
+            display: block;
             width: 100%;
             height: 200px;
             margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        #startButton {
+        #controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #wpm {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        #npalabras, #startButton {
             padding: 10px 20px;
             font-size: 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #npalabras:hover, #startButton:hover {
+            background-color: #0056b3;
         }
         #display {
             text-align: center;
             font-size: 28px;
             margin-top: 20px;
             color: #333;
-            background-color: #dacdcd;
+            background-color: #fff;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -34,26 +63,23 @@
 <body>
     <h1>Aplicación de Lectura Rápida</h1>
     <textarea id="text" placeholder="Ingrese el texto aquí..."></textarea>
-    <br>
-    <p id="wpm">Palabras por minuto: <span id="wpmValue">0</span></p>
-    <button id="npalabras" onclick="npalabras()">1</button>
-    <button id="startButton">Iniciar Lectura</button>
+    <div id="controls">
+        <p id="wpm">Palabras por minuto: <span id="wpmValue">300</span></p>
+        <button id="npalabras" onclick="toggleWords()">1</button>
+        <button id="startButton">Iniciar Lectura</button>
+    </div>
     <div id="display"></div>
-<script>
 
-        
+    <script>
         let wpm = 300; // Default words per minute
-        var twowords = false;
+        let twowords = false;
         document.getElementById('wpmValue').textContent = wpm;
 
-        function npalabras(){
-            twowords= twowords==true ? twowords= false : twowords = true;
-            if(twowords==true){
-                document.getElementById('npalabras').textContent = "2";
-            }else{
-                document.getElementById('npalabras').textContent = "1";
-            }   
+        function toggleWords() {
+            twowords = !twowords;
+            document.getElementById('npalabras').textContent = twowords ? "2" : "1";
         }
+
         document.addEventListener('keydown', function(event) {
             if (event.key === 'ArrowUp') {
                 wpm += 10;
@@ -66,33 +92,19 @@
         document.getElementById('startButton').addEventListener('click', function() {
             const text = document.getElementById('text').value;
             const words = text.split(' ');
-            let index = 0 ;
+            let index = 0;
             const display = document.getElementById('display');
 
             function showNextWord() {
-                if (index < words.length && twowords==true) {
-                    display.textContent = words[index] + " " + words[index+1];
-                    index= index +2;
-                    setTimeout(showNextWord, 60000/wpm); // Adjust the speed here (in milliseconds)
+                if (index < words.length) {
+                    display.textContent = twowords && index + 1 < words.length ? words[index] + " " + words[index + 1] : words[index];
+                    index += twowords ? 2 : 1;
+                    setTimeout(showNextWord, 60000 / wpm);
                 }
-                if (index < words.length && twowords==false) {
-                    display.textContent = words[index];
-                    index++;
-                    setTimeout(showNextWord, 60000/wpm); // Adjust the speed here (in milliseconds)
-                }
-
             }
-            console.log(words.length);
+
             showNextWord();
         });
-        function calculateInterval(wpm) {
-            return 60000 / wpm;
-        }
-        // funcion que calcula el tiempo de duracion de la lectura  
-        function calculateTime(words, wpm) {
-            return (words.length / wpm) * 60;
-        }
-        
     </script>
 </body>
 </html>
