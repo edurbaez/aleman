@@ -103,6 +103,7 @@
         const npalabra = document.getElementById('npalabra');
         var n = 0;
         var idioma = 'es';
+        lista = [];
 
         btn.addEventListener('click',()=>{
 
@@ -114,11 +115,31 @@
             //const lowercaseLines = lines.map(line => line.toLowerCase());
             
             unique(lines).forEach((line, index) => {
-                translateWord(idioma, line);
+                translateWord(idioma, line).then(traducido => {
+                    lista.push({ palabra: line, traduccion: traducido });
+                    
+                });
             });
-            console.log(unique(lines));
-        
+
+            
+            lista.sort((a, b) => a.palabra.localeCompare(b.palabra)).forEach((line, index) => {
+                const li = document.createElement('li');
+                const table = document.createElement('table');
+                const tr = document.createElement('tr');
+                const tdWord = document.createElement('td');
+                const tdTranslation = document.createElement('td');
+
+                tdWord.textContent = line.palabra;
+                tdTranslation.textContent = line.traduccion;
+
+                tr.appendChild(tdWord);
+                tr.appendChild(tdTranslation);
+                table.appendChild(tr);
+                li.appendChild(table);
+                paas.appendChild(li);
+            });
         });
+
 
 
 
@@ -139,11 +160,8 @@
                 const response = await fetch(url);
                 const result = await response.json();
                 var resultado = result[0][0][0];
-                console.log(resultado.toString());
-                
-                n++;
-              
-            const table = document.createElement('table');
+                return resultado;
+            /*const table = document.createElement('table');
             const tr = document.createElement('tr');
             const tdWord = document.createElement('td');
             const tdTranslation = document.createElement('td');
@@ -154,9 +172,8 @@
             tr.appendChild(tdWord);
             tr.appendChild(tdTranslation);
             table.appendChild(tr);
-
             paas.appendChild(table);
-            
+            */
             } catch (error) {
                 console.error('Error translating word:', error);
                 return word;
