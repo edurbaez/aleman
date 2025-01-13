@@ -97,6 +97,7 @@
 
 
     <script>
+
         const textarea = document.querySelector('textarea');
         const btn = document.querySelector('button');
         const paas = document.getElementById('paas');
@@ -121,7 +122,7 @@
                 });
             });
 
-            
+
             lista.sort((a, b) => a.palabra.localeCompare(b.palabra)).forEach((line, index) => {
                 const li = document.createElement('li');
                 const table = document.createElement('table');

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lista de palabras</title>
+    <style>
+        body{
+            
+            flex-direction: column;
+            justify-content: space-around;
+            height: 90vh;
+            overflow: scroll;
+        }
+        footer{
+            margin-top: 50px;
+            display: flex;
+            width: 100%;
+            background: rgb(103, 150, 10);
+            justify-content: space-around;
+        }
+        div {
+            /*display: ;*/
+            margin: auto;
+            width: 90%;
+            justify-content: space-around;
+            }
+        
+
+        div div{
+            padding: 20px;
+            width: 50%;
+            height: 50%;
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            border: 1px solid black;
+        }
+        button {
+            flex: 1 1 auto;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border: #173819 solid 3px;
+        }
+
+        button:hover {
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+        #lista{
+            width: 90%;
+            border: 1px solid grey;
+            
+        }
+        td, th{
+            border: 2px solid grey;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="contenedorpalabra">
+        <div id="p1"></div>
+        <div id="p2"></div>
+    </div>
+    <footer>
+        <button id="auto" onclick="Auto()" style="background-color: green;">auto: on</button>
+        <button id="dual" onclick="Dual()" style="background-color: red;">de</button>
+        <button id="leer" onclick="Leer()">Leer</button>
+        
+    </footer>
+    <hr>
+    <div  id="listas" style="display: flex;margin: 0%;">
+       
+        <button onclick="verlista(baseesp,basede)">desplegar lista</button>
+        
+    </div>
+    <div id="">
+        <table id="lista" style="">
+            <tr>
+                <th>uno</th>
+                <th>dos</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+
+        //base con todas la palabras en español y aleman
+        const baseesp= ["aben", "desconectado", "levantar", "finalizar la sesión", "Absolutamente", "Respecto", "actual", "Solo", "todo", "Cada día", "entonces", "Viejo", "Alternativas", "oficina gubernamental", "oficinas", "hacia", "otro", "cambiar", "Información", "indicar", "agradable", "llamado", "miró", "Saludo", "llamar", "llamadas", "Anuncios", "Texto del anuncio", "adquirir", "Persona de contacto", "Solicitud", "Hoja de respuestas", "respuesta", "Número", "Trabajar", "agencia de empleo", "molesta", "ACIÓN", "mas atractivo", "también", "en", "Tareas", "decepcionado", "Expresiones", "Información", "excepto", "Desmantelamiento", "aparte de eso", "afuera", "IDENTIFICACIÓN", "Carretera", "COCHE GRATIS", "automáticamente", "Coches", "azu", "baño", "se baña", "Bañera", "pronto", "balcón", "bancos", "construir", "árboles", "construye", "funcionarios", "Oficial", "medio", "Finalizar", "entusiasta", "comienza", "mantener", "Reclamos", "Autoridades", "Ambos", "al", "Ejemplo", "tienesme", "recibir", "recibe", "cómodo", "aconsejar", "tomado en cuenta", "confirmar", "mejor", "cierto", "Visita", "Acerca de", "operación", "residentes", "residentesresidentes", "asequible", "pagar", "pagado", "Imagen", "imágenes", "hasta", "por favor", "licenciado en Derecho", "restos", "Necesidad", "frotar", "carta", "traer", "oficina del ciudadano", "autobús", "coche compartido", "Ofertas de coche compartido", "Charlar", "cims", "com", "por eso", "DaiseDrops", "con eso", "danit", "GRACIAS", "entonces", "en eso", "puede", "eso", "dura", "pensar", "Denunciar", "el", "Alemán", "Alemania", "El", "Martes", "Servicios", "Éste", "Conversar", "doctor", "jueves", "doris", "Allá", "durmiente", "tres", "cincuenta y tres", "tercero", "DTZ", "a través de", "estaba permitido", "bicicletas eléctricas", "Eduardo", "propio", "de hecho", "a", "simplemente", "Entrada", "una vez", "incluido", "cincuenta y uno", "Oficina de Registro de Residentes", "Mercado electrico", "Electromo", "Correo electrónico", "Fin", "Distancias", "Disculpe", "Cualquiera", "Experiencias", "necesario", "Erganá", "añadir", "recibo", "significativo", "explicar", "preguntar", "Permiso", "hacer posible", "alcanzar", "Sustituto", "primero", "Él", "algo", "euro", "para siempre", "extra", "conducir", "Bicicleta", "Conducir", "vehículo", "caso", "pendiente", "familias", "Ventana", "TELEVISOR", "completo", "aviso", "película", "oficina de impuestos", "financialmente", "encontrar", "Encontrar", "Carne", "pendiente", "apoyar financieramente", "foto", "Preguntas", "Mujer", "viernes", "Amigos", "amigable", "alegre", "sentir", "Licencia de conducir", "Cinco", "para", "bastante", "cochera", "dar", "Honorarios", "honrado", "entre sí", "escuchó", "va", "abandonar", "Dinero", "hecho", "Verduras", "acogedor", "Exactamente", "derecho", "con alegría", "dicho", "Monto total", "cerrado", "escrito", "velocidad", "Conversación", "Ayer", "control de salud", "conocido", "da", "derramar", "aplica", "creer", "Mismo", "feliz", "más grande", "grande", "Espacios verdes", "grupos", "saludo", "Saludar", "Bien", "tener", "Colgar", "Tener", "tiene", "Calle principal", "hogar", "patria", "Heimstetten", "se llama", "brillante", "claroscuro", "en", "Adelante", "Señor", "hoy", "Ey", "por la presente", "Altura", "cueva", "escuchar", "escucha", "Escuchar", "Hussler", "I", "A ellos", "Tuyo", "en el", "siempre", "información", "Texto informativo", "incluido", "dentro", "en el", "irle", "es", "Sí", "cada", "De todos modos", "ahora", "centro de empleo", "Oficina de Bienestar Juvenil", "chico", "Junio", "roto", "tarjetas", "juego de cartas", "símbolo de caja registradora", "Kaulmann", "ninguno", "bodega", "saber", "marca", "Matrícula", "Oficina de matriculación de vehículos", "asiento para niños", "Paseante", "tener éxito", "obras", "claro", "aclarar", "profesor de clase", "pequeño", "pequeñogrande", "clima", "Aire acondicionado", "Protección del clima", "trompa", "venir", "Comentarios", "complicado", "Poder", "podría", "Podría", "Podría", "Cuentas", "vehículo de motor", "Cruz", "conseguir", "crisis", "crítico", "Centro de atención al cliente", "abandonar", "Terminación", "Curso", "Sala de curso", "camino rural", "largo", "Más lento", "dejar", "Calidad de vida", "vale la pena vivir", "vivir cincuenta", "encendedor", "Desafortunadamente", "Leila", "poder pagar", "Leila", "lección", "leer", "último", "liquen", "Estimado", "entrega", "Resolver", "Soluciones", "ludmillas", "cincuenta y cinco", "hacer", "podría", "mack", "tarifa de recordatorio", "RECORDATORIO", "hombre", "algunas cosas", "a veces", "marca", "AcciónAcción", "Medidas", "Matías", "más", "mío", "significar", "medio", "Informe", "MensajeVentas", "al menos", "minutos", "incomprendido", "entender mal", "con", "Entre sí", "medio", "movilidad", "desear", "moderno", "lunes viernes", "posible", "posible", "molrícula", "lunes", "Motor", "debe", "debe", "después", "Vecinos", "preguntar", "Noticias", "preguntar", "nativo", "Nedberg", "llevar", "red", "Neuberg", "nuevo", "curioso", "hoja informativa", "ng", "no", "aún", "NOIIVIS", "NOTA", "anotar", "necesario", "Novak", "número", "Solo", "útil", "o", "público", "Horario de apertura", "a menudo", "Oh", "sin", "DE ACUERDO", "en línea", "Baja en línea", "examen en línea", "arreglar", "oficina de orden publico", "parejas", "Pase de estacionamiento", "Plazas de aparcamiento", "encaja", "pasta", "personas", "persona", "Planta", "auto", "pla", "plan", "planes", "Lugar", "positivo", "POR", "problema", "proyecto", "tarea de examen", "Puar", "adivinar", "juego de adivinanzas", "Ayuntamiento", "Investigación", "calcular", "bien", "REDMI", "reducir", "reducido", "regularmente", "reparar", "correcto", "Consultas", "llamar", "llamadas", "decir", "dicho", "Samirs", "Recolectar", "Sábado", "Oración", "Oraciones", "dijo", "enviar", "Firmar", "Final", "rápido", "Ya", "mas bella", "Escribir", "escribe", "en forma escrita", "proteger", "Mierda", "cincuenta y seis", "Ver", "su", "servicio", "empresa de servicios", "Horarios de servicio", "sí mismo", "Seguridad", "Cadencias de seguridad", "Códigos de seguridad", "ganador", "siegerstadtneubergde", "ve", "simí", "son", "teléfono inteligente", "entonces", "debería", "debería", "debería", "Verano", "Sol", "Domingo", "de lo contrario", "Clasificar", "así como ", "de todos modos", "así como", "oficina de bienestar social", "ahorrar", "Especial", "especial", "Mensaje de voz", "Hablar", "habla", "Tesorería", "Ciudad", "tesorería de la ciudad", "administración de la ciudad", "Entorno urbano", "oficina de registro", "comienza", "ESTACIÓN", "Soportes", "Lugar", "Buey", "Verdadero", "Ánimo", "Tortas", "Buscar", "súper", "supermercado", "Mesa", "día", "TACIÓN", "te", "Parte", "teléfono", "Llamada telefónica", "Teléfono", "Cita", "caro", "texto", "Tema", "Temas", "Aparcamientos subterráneos", "Consejos", "transporte", "Transcripción", "Escalera", "a pesar de ello", "hacer", "arriba", "Sobrevolar", "consideró", "transferir", "uf", "Órbita", "gratis", "intercambio ", "Protección ambiental", "Reubicación", "absolutamente", "y", "aproximadamente", "nuestro", "inseguro", "bajo", "Documentos", "diferencia", "entender", "subrayar", "apoyo", "Urb.", "Vacaciones", "mejorar", "conectar", "aceptar", "comparar", "vender", "Tráfico", "Medios de transporte", "extendido", "Seguro", "comprendido", "entender", "Usar", "perdón", "renunciar", "muchos ninguno", "Muchos", "Tal vez", "cuatro", "Cuarto", "antes", "Preparación", "crece", "Elegir", "fue", "esperar", "Tiempos de espera", "Por qué", "sitio web", "ni", "debido a", "más", "cual", "pocos", "si", "Wershofen", "Barrio Oeste", "mas importante", "contradecir", "repetir", "Cómo", "quiere", "bienvenido", "desear", "se convierte", "en realidad", "semanas", "probablemente", "residir", "Proyecto de vivienda", "espacio vital", "Apartamentos", "oficina de vivienda", "desear", "buscado", "wonte", "Palabras", "desear", "convertirse", "quería", "tirar dados", "juego de dados", "enojado", "Pagos", "Recibos de pago", "Tiempo", "Jalar", "Objetivos", "primero", "satisfecho", "Tren", "Permiso", "Certificado de registro", "Oficina de Admisiones", "aceptar", "eso es"];
+        const basede= ["aben", "abgemeldet", "abholen", "abmelden", "Absolut", "Achten", "aktuellen", "Allein", "alles", "Alltag", "also", "Alter", "Alternativen", "Amt", "Ämtern", "anden", "anderes", "ändern", "Angabe", "angeben", "angenehm", "angerufen", "angeschaut", "Anrede", "anrufen", "anruft", "Ansagen", "Ansagetext", "anschaffen", "Ansprechpartner", "Antrag", "Antwortbogen", "antworten", "Anzahl", "Arbeiten", "Arbeitsagentur", "ärgert", "ATION", "attraktiver", "auch", "auf", "Aufgaben", "aufgeregt", "Ausdrücke", "Auskunft", "außer", "Außerbetriebsetzung", "außerdem", "außerhalb", "Ausweis", "Autobahn", "AUTOFREI", "automatisch", "Autos", "azu", "Bad", "badet", "Badewanne", "bald", "Balkon", "Bänken", "bauen", "Bäumen", "baut", "Beamten", "Beamtineinem", "bedeutet", "Beenden", "begeistert", "beginnt", "behalten", "Behauptungen", "Behörden", "Beides", "beim", "Beispiel", "bekamme", "bekommen", "bekommt", "bequem", "beraten", "berücksichtigt", "bestätigen", "besten", "bestimmtes", "Besuch", "Betreff", "betrieb", "Bewohner", "BewohnerinnenBewohner", "bezahlbaren", "bezahlen", "bezahlt", "Bild", "Bildern", "bis", "bitte", "bl", "bleibt", "Brauchen", "breiben", "Brief", "bringen", "Bürgeramt", "Bus", "Carsharing", "CarsharingAngebote", "Chat", "cimmt", "com", "dafür", "DaiseTropfen", "damit", "danit", "DANKE", "dann", "darauf", "darf", "dass", "dauert", "denken", "Denunciar", "der", "deutsche", "Deutschland", "Die", "Dienstag", "Dienstleistungen", "diesem", "Diskutieren", "Doktor", "donnerstags", "Doris", "Dort", "douert", "drei", "dreiundfünfzig", "dritt", "DTZ", "durch", "durfte", "EBikes", "Edward", "eigenes", "eigentlich", "einen", "einfach", "Eingang", "einmal", "einschließlich", "einundfünfzig", "Einwohnermeldeamt", "Elektromarkt", "Elektromo", "EMail", "Ende", "Entfernungen", "Entschuldigung", "Entweder", "Erfahrungen", "erforderlich", "Ergana", "Ergänzen", "Erhalt", "erheblichen", "erklären", "erkundigen", "Erlaubnis", "ermöglichen", "erreichen", "Ersatz", "erst", "Es", "etwas", "Euro", "ewig", "extra", "fahren", "Fahrrad", "Fahrt", "Fahrzeug", "Fall", "fällig", "Familien", "Fenster", "Fernseher", "fertig", "feststellen", "Film", "Finanzamt", "finanziell", "finden", "Findest", "Fleisch", "föllig", "fördern", "Foto", "Fragen", "Frau", "freitags", "Freunde", "freundlichen", "fröhlich", "fühlen", "Führerschein", "Fünf", "für", "ganz", "Garage", "geben", "Gebühren", "geehrter", "gegenseitig", "gehört", "geht", "gekündigt", "Geld", "gemacht", "Gemüse", "gemütlich", "genau", "gerade", "gern", "gesagt", "Gesamtbetrag", "geschlossen", "geschrieben", "Geschwindigkeit", "Gespräch", "Gestern", "Gesundheitscheck", "gewusst", "gibt", "gießen", "gilt", "glauben", "Gleiche", "glücklich", "größere", "großes", "Grünflächen", "Gruppen", "Gruß", "Grüßen", "Guten", "haben", "Hängen", "Hast", "hat", "Hauptstraße", "Hause", "Heimatland", "Heimstetten", "heißt", "hell", "helldunkel", "herein", "hereinkommen", "Herr", "heute", "Hey", "hiermit", "Höhe", "Höhle", "hören", "hört", "Hren", "Hüssler", "Ich", "Ihnen", "Ihrer", "im", "immer", "Informationen", "Informationstext", "inklusive", "innerhalb", "ins", "irle", "ist", "Ja", "jede", "Jedenfalls", "jetzt", "Jobcenter", "Jugendamt", "junge", "Juni", "kaputt", "Kärtchen", "Kartenspiel", "Kassenzeichens", "Kaulmann", "keinen", "Keller", "kennen", "Kennzeichen", "KfzKennzeichen", "KfzZulassungsstelle", "Kindersitz", "Kinderwagen", "klappen", "klappt", "klar", "klären", "Klassenlehrerin", "kleines", "kleinesgroßes", "Klima", "Klimaanlage", "Klimaschutz", "Kofferraum", "kommen", "Kommentare", "kompliziert", "Können", "konnten", "Könnten", "Könntest", "Konten", "Kraftfahrzeugs", "Kreuzen", "kriegen", "Krise", "kritisch", "Kundencenter", "kündigen", "Kündigung", "Kurs", "Kursraum", "Landstraße", "lange", "langsamer", "lassen", "Lebensqualität", "lebenswertes", "lebenundfünfzig", "leichter", "Leider", "Leila", "leisten", "Lejla", "Lektion", "Lesen", "letzter", "lichen", "lieber", "liefert", "Lösen", "Lösungen", "Ludmillas", "lünfundiünfzig", "machen", "macht", "mack", "Mahngebühr", "MAHNUNG", "man", "manches", "manchmal", "markieren", "MaßnahmeAktion", "Maßnahmen", "Matthias", "mehr", "meiner", "meinst", "meint", "Melden", "MeldungVerkauf", "mindestens", "Minuten", "missverstanden", "missverstehen", "mit", "Miteinander", "mitten", "Mobilität", "möchte", "modernes", "MoFr", "möglich", "möglichst", "molricule", "montags", "Motor", "muss", "müssen", "nach", "Nachbarn", "nachfragen", "Nachrichten", "nachzufragen", "nativen", "Nedberg", "nehmen", "Netz", "Neuberg", "neues", "neugierig", "Newsletter", "ng", "nicht", "noch", "NOIIVIS", "NOTE", "notieren", "nötig", "Nowak", "Nummer", "Nur", "nützt", "oder", "öffentliche", "Öffnungszeiten", "oft", "Oh", "ohne", "okay", "online", "OnlineAbmeldung", "OnlinePrüfung", "ordnen", "Ordnungsamt", "Paare", "Parkausweis", "Parkplätze", "passt", "Paste", "Pers", "Person", "Pflanzen", "Pkw", "pla", "planen", "plant", "Platz", "positive", "PRO", "Problem", "Projekt", "Prüfungsaufgabe", "Puar", "raten", "Ratespiel", "Rathaus", "Recherchieren", "rechnen", "recht", "REDMI", "reduzieren", "reduziert", "regelmäßig", "Reparatur", "richtig", "Rückfragen", "rufen", "ruft", "sagen", "Sagten", "Samirs", "Sammeln", "Samstag", "Satz", "Sätze", "Sayed", "schicken", "Schild", "Schluss", "schnell", "Schon", "schöner", "Schreiben", "schreibt", "schriftlich", "schützen", "Schwachsinn", "sechsundfünfzig", "Sehen", "seinem", "Service", "Servicefirma", "Servicezeiten", "sich", "Sicherheit", "Sicherheitscades", "Sicherheitscodes", "Sieger", "siegerstadtneubergde", "sieht", "Simi", "sind", "Smartphone", "so", "soll", "sollten", "solltest", "Sommer", "Sonne", "Sonntag", "sonst", "Sortieren", "sowie", "sowieso", "sowohl", "Sozialamt", "sparen", "Spezial", "spezielle", "Sprachnachricht", "Sprechen", "spricht", "Staatskasse", "Stadt", "Stadtkasse", "Stadtverwaltung", "Stadtverwelton", "Standesamt", "startet", "STATION", "Steht", "Stell", "Steuern", "Stimmt", "Stimmung", "stortet", "Suchen", "super", "Supermarkt", "Tabelle", "Tag", "TATION", "Te", "Teil", "Telefon", "Telefonat", "Telefonische", "Termin", "teuer", "Text", "Thema", "Themen", "Tiefgaragen", "Tipps", "transportieren", "Transprite", "Treppenhaus", "Trotzdem", "tun", "über", "Überfliegen", "überlegt", "überweisen", "uf", "Umkreisen", "umsonst", "umtauschen", "Umweltschutz", "Umzug", "unbedingt", "und", "ungefähr", "unseren", "unsicher", "unter", "Unterlagen", "unterschied", "unterst", "unterstreichen", "unterstützen", "Urb", "Urlaub", "verbessern", "verbinden", "vereinbaren", "vergleichen", "verkaufen", "Verkehr", "Verkehrsmittel", "verlängert", "Versicherung", "verstanden", "versteh", "Verwenden", "Verzeihung", "verzichten", "vielekeine", "Vielen", "Vielleicht", "vier", "Viertel", "vor", "Vorbereitung", "wächst", "Wählen", "wars", "warten", "Wartezeiten", "Warum", "Webseite", "weder", "wegen", "weitere", "welcher", "wenig", "wenn", "Wershofen", "Westviertel", "wichtiger", "widersprechen", "wiederholen", "Wieso", "will", "willkommen", "willst", "wird", "wirklich", "Wochen", "wohl", "wohnen", "Wohnprojekt", "Wohnraum", "Wohnungen", "Wohnungsamt", "wollen", "wollte", "wonte", "Wörter", "wünschen", "wurden", "würdest", "Würfeln", "Würfelspiel", "wütend", "Zahlungen", "Zahlungseingänge", "Zeit", "Ziehen", "Ziele", "zuerst", "zufrieden", "Zug", "Zulassung", "Zulassungsbescheinigung", "Zulassungsstelle", "zustimmen", "zwar"];
+        //copia los valores de la base de datos del 1 al 100 usanfo object asing
+
+        var palabras=[...baseesp.slice(0,100)];;
+        var traduccion=[...basede.slice(0,100)];; 
+        
+
+        // genera los botonoes para llamar a la funvion listaN seleccionar la lista de palabras a mostrar
+        // Generate buttons for each set of 100 words
+        for (let i = 0; i < Math.ceil(baseesp.length / 100); i++) {
+            let button = document.createElement("button");
+            button.innerText = `lst${i + 1}`;
+            button.onclick = function() { listaN(i); };
+            document.getElementById("listas").appendChild(button);
+        }
+
+
+        //divide la base de palabras en listas de 100 palabras para mostrarlas 
+        function listaN(n){
+            var inicio=n*100
+            var fin=inicio+100
+            palabras=[...baseesp.slice(inicio,fin)];
+            traduccion=[...basede.slice(inicio,fin)];
+            mostrarPalabra();
+            verlista(palabras,traduccion)
+        }
+        
+        var visto= [];
+        auto = auto;
+        dual = false;
+
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var intentos = 0;
+        function getPalabra(){
+            var index = getRandomInt(palabras.length);
+            while(visto.includes(index)&& intentos<10){
+                return getPalabra();
+                intentos++;
+                console.log("intenton",intentos);
+                
+            }
+            if(visto.length == palabras.length -3){
+                    visto = [];
+                    
+            }
+            visto.push(index);
+            return index;
+        }
+       
+        
+
+        // formuala para leer el innertext de un elemento que capture el evento en utterance y llame la funcion
+        var manejoDual= false;
+        var idioma = "de";
+        function leerTexto() {
+            var texto;    
+            idioma = "de";
+            texto= p2.innerText; 
+            if(dual){
+                if(manejoDual){
+                    idioma = "es";
+                    texto= p1.innerText; 
+                    manejoDual = false;
+                }else{
+                    idioma ="de";
+                    texto= p2.innerText; 
+                    manejoDual = true;
+                }
+            }
+            
+            var utterance = new SpeechSynthesisUtterance(texto);
+            utterance.lang = idioma;
+            speechSynthesis.speak(utterance);
+            
+            
+            //idioma = idioma=="es-ES"?"de-DE":"es-ES";
+            //texto= texto==p1.innerText?p2.innerText:p1.innerText;
+            //if (speechSynthesis.speaking) {
+            //    console.log("Leyendo el texto");
+            //}
+            if(auto){
+                utterance.onend = function() {     
+                    setTimeout(() => {    
+                        if(idioma=="de"){
+                            mostrarPalabra();    
+                        }
+                        leerTexto();
+                        
+                    }, 500);
+                }
+                
+
+
+            }
+            
+        }
+        function Auto(){
+            document.getElementById("auto").innerText = auto==true?"auto:off":"auto: on";
+            
+            if(auto){
+                document.getElementById("auto").style.backgroundColor = "red";
+            }else{
+                document.getElementById("auto").style.backgroundColor = "green";
+            }
+
+            auto= auto==false?true:false
+        }        
+        function Dual(){
+            document.getElementById("dual").innerText = dual==true?"de":"es-de";
+            
+            if(dual){
+                document.getElementById("dual").style.backgroundColor = "red";  
+            }else{
+                document.getElementById("dual").style.backgroundColor = "green";
+            }
+
+            dual= dual==false?true:false
+        }
+        function Leer(){
+            
+            if(document.getElementById("leer").innerText == "activo"){
+                location.reload()
+                
+            }
+            if(document.getElementById("leer").innerText == "Leer"){
+                document.getElementById("leer").innerHTML = "activo";
+                document.getElementById("leer").onclick = "Leer()";
+                leerTexto()
+                  
+            }
+
+
+        }
+        
+       
+       
+        function mostrarPalabra(){
+            var index = getPalabra();
+            p1.innerText = palabras[index];
+            p2.innerText = traduccion[index];
+        }
+
+        // recibe las lista idioma nativo e idioma a aprender, las depliega en una elemento tabla con el Id lista
+        function verlista(baseesp,basede){
+            //conbinar listas, para ordenar alfabeticamente
+            let listaConvinada= [];
+            for (let i = 0; i < baseesp.length; i++) {
+                listaConvinada.push(basede[i] + "-"+ baseesp[i]);
+                
+            }
+
+            document.getElementById("lista").innerHTML= `
+            <tr>
+                <th>aleman</th>
+                <th>espanol</th>
+            </tr>
+            `
+            listaConvinada.forEach(e=>{
+                let valor= e.split("-")    
+                document.getElementById("lista").innerHTML+=
+                `
+                    <tr>
+                        <td>${valor[0]}</td>
+                        <td>${valor[1]}</td>
+                    </tr>
+                `
+            })    
+        }
+
+        listaN(0);
+
+        // Call the function when the button is clicked
+        //document.querySelector("button").addEventListener("click", leerTexto);
+    </script>
+</body>
+</html>
